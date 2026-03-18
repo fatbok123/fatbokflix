@@ -85,14 +85,23 @@
 
         .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; }
         
+        /* DÜZELTİLMİŞ KART VE RESİM TASARIMI */
         .card {
-            min-width: 220px; position: relative; border-radius: 16px;
+            min-width: 220px; 
+            max-width: 220px; 
+            position: relative; border-radius: 16px;
             overflow: hidden; cursor: pointer; border: 1px solid var(--border);
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none; color: white; display: flex; flex-direction: column;
         }
         .card:hover { transform: scale(1.05) translateY(-10px); border-color: var(--accent); z-index: 10; }
-        .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
+        
+        .card img { 
+            width: 100%; 
+            aspect-ratio: 2/3; /* Tüm afişleri aynı boyuta sabitler */
+            object-fit: cover;   /* Resimlerin bozulmasını engeller */
+            display: block;
+        }
         
         .card-overlay {
             position: absolute; inset: 0; padding: 20px;
@@ -110,6 +119,7 @@
             .hero-info h1 { font-size: 3rem; }
             .nav-items, .search-wrapper { display: none; }
             .hero { height: 60vh; }
+            .card { min-width: 160px; max-width: 160px; }
         }
     </style>
 </head>
