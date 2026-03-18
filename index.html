@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATBOKFLIX | The Next Gen Cinema</title>
+    <title>FATBOKFLIX | CREXOWW</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -99,6 +99,7 @@
             min-width: 240px; position: relative; border-radius: 20px;
             overflow: hidden; cursor: pointer; border: 1px solid var(--border);
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            text-decoration: none; color: white;
         }
         .card:hover { transform: scale(1.08) translateY(-10px); z-index: 100; border-color: var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         
@@ -164,6 +165,15 @@
             <div class="row-title reveal"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Diziler</div>
             <div class="slider" id="movieGrid">
                 
+                <a href="derry-izle.html" class="card reveal movie-item" data-title="IT Welcome to Derry">
+                    <div class="imdb-tag">8.4</div>
+                    <img src="https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp" alt="IT Welcome to Derry">
+                    <div class="card-overlay">
+                        <div class="card-title">IT: Welcome to Derry</div>
+                        <div class="card-meta">2025 • 8 Bölüm • Korku</div>
+                    </div>
+                </a>
+
                 <a href="dizi-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms">
                     <div class="imdb-tag">8.9</div>
                     <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" alt="Poster">
@@ -182,9 +192,9 @@
                     </div>
                 </div>
 
-                <div class="card reveal"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"></div>
-                <div class="card reveal"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"></div>
-                <div class="card reveal"><img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Sinema"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Film Dünyası"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Karanlık Sinema"><img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400"></div>
             </div>
         </section>
     </div>
