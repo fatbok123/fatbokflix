@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATBOKFLIX | Zootropolis 2 Full HD İzle</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        :root {
+            --bg: #020202; --surface: #0a0a0c; --accent: #ec5d00;
+            --text-primary: #ffffff; --text-secondary: #94a3b8;
+            --border: rgba(255, 255, 255, 0.07);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: none; }
+        body { background-color: var(--bg); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; height: 70px; padding: 0 5%;
+            background: rgba(2, 2, 2, 0.85); backdrop-filter: blur(20px);
+            z-index: 1000; display: flex; align-items: center; border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: white; letter-spacing: -1.5px; }
+        .logo span { color: var(--accent); }
+
+        .container { max-width: 1200px; margin: 120px auto; padding: 0 20px; }
+
+        .video-box { 
+            background: #000; border-radius: 24px; overflow: hidden; 
+            border: 1px solid var(--border); box-shadow: 0 40px 100px rgba(0,0,0,0.8); 
+            aspect-ratio: 16/9; margin-bottom: 40px;
+        }
+        video { width: 100%; height: 100%; outline: none; }
+
+        .movie-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+        .movie-header h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; }
+        .badge { background: rgba(236, 93, 0, 0.1); color: var(--accent); padding: 8px 16px; border-radius: 12px; font-weight: 800; border: 1px solid var(--accent); }
+        
+        .desc { color: var(--text-secondary); line-height: 1.8; font-size: 1.2rem; max-width: 900px; margin-bottom: 40px; }
+        
+        .back-link {
+            display: inline-flex; align-items: center; gap: 10px; color: var(--text-secondary);
+            text-decoration: none; font-weight: 600; margin-bottom: 30px; transition: 0.3s;
+        }
+        .back-link:hover { color: var(--accent); transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+
+    <nav><a href="index.html" class="logo">FATBOK<span>FLIX</span></a></nav>
+
+    <div class="container">
+        <a href="index.html" class="back-link"><i data-lucide="arrow-left"></i> Ana Sayfaya Dön</a>
+        
+        <div class="video-box">
+            <video id="player" controls poster="https://media.baovanhoa.vn/zoom/1000/Uploaded/nghiemthanh/2026_01_01/1_6_FNCH.jpg"></video>
+        </div>
+
+        <div class="movie-header">
+            <div>
+                <h1>Zootropolis 2</h1>
+                <p style="color: var(--accent); font-weight: 600; margin-top: 5px;">2025 • Animasyon / Komedi • Full HD</p>
+            </div>
+            <div class="badge">AİLE DOSTU</div>
+        </div>
+
+        <p class="desc">
+            Judy Hopps ve Nick Wilde, modern memeli metropolü Zootropolis'e geri dönüyor! Bu kez gizemli bir vakanın peşinde, şehrin hiç görülmemiş mahallelerine dalacak ve dostluklarını en büyük sınavdan geçirecekler.
+        </p>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const video = document.getElementById('player');
+        const m3u8Url = 'https://vs1.photostack.net/v/Zootopia.2.2025.FHD.WebDL/master.m3u8';
+
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(m3u8Url);
+            hls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = m3u8Url;
+        }
+    </script>
+</body>
+</html>
