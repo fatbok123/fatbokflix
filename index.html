@@ -175,6 +175,15 @@
                     </div>
                 </a>
 
+                <a href="mobland-izle.html" class="card reveal movie-item" data-title="Mobland" data-type="dizi">
+                    <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
+                    <img src="https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg" alt="Mobland">
+                    <div class="card-overlay">
+                        <div class="card-title">Mobland</div>
+                        <div class="card-meta">2025 • 9 Bölüm • Suç / Aksiyon</div>
+                    </div>
+                </a>
+
                 <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather Baba" data-type="film">
                     <div class="imdb-tag" style="color: #ec5d00;">9.2</div>
                     <img src="https://communist.red/wp-content/uploads/2022/08/godfather.png" alt="The Godfather">
@@ -248,7 +257,6 @@
             let items = document.querySelectorAll('.movie-item');
             let titleElement = document.getElementById('rowTitle');
 
-            // Başlığı güncelle
             if(type === 'dizi') titleElement.innerHTML = '<i data-lucide="tv" color="#ec5d00"></i> Popüler Diziler';
             else if(type === 'film') titleElement.innerHTML = '<i data-lucide="clapperboard" color="#ec5d00"></i> Kült Filmler';
             else titleElement.innerHTML = '<i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar';
