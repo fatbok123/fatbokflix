@@ -25,11 +25,9 @@
         
         body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
 
-        /* --- Global Animations --- */
         @keyframes reveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .reveal { animation: reveal 0.8s cubic-bezier(0.2, 1, 0.3, 1) forwards; }
 
-        /* --- Header / Navigation --- */
         nav {
             position: fixed; top: 0; width: 100%; height: 70px; padding: 0 5%;
             background: linear-gradient(to bottom, var(--bg), transparent);
@@ -52,12 +50,11 @@
             padding: 10px 15px 10px 40px; border-radius: 12px; color: white; outline: none;
             transition: 0.3s; font-size: 0.8rem;
         }
-        .search-wrapper input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); width: 350px; }
+        .search-wrapper input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
 
-        /* --- Immersive Hero Section --- */
         .hero {
-            position: relative; height: 90vh; width: 100%;
+            position: relative; height: 85vh; width: 100%;
             display: flex; align-items: center; padding: 0 5%;
         }
         .hero-video-bg {
@@ -65,7 +62,7 @@
             background: linear-gradient(to right, var(--bg) 20%, transparent 70%),
                         linear-gradient(to top, var(--bg) 10%, transparent 40%),
                         url('https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg') center/cover;
-            z-index: -1; transition: 0.8s;
+            z-index: -1;
         }
 
         .hero-info { max-width: 650px; }
@@ -74,53 +71,45 @@
             padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 0.7rem;
             border: 1px solid var(--accent); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 5px;
         }
-        .hero-info h1 { font-size: 5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -3px; line-height: 0.95; }
+        .hero-info h1 { font-size: 4.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -3px; line-height: 0.95; }
         .hero-info p { color: var(--text-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 35px; }
 
         .cta-group { display: flex; gap: 15px; }
-        .btn { 
-            padding: 15px 35px; border-radius: 14px; font-weight: 800; text-decoration: none;
-            display: flex; align-items: center; gap: 12px; transition: 0.4s; font-size: 0.9rem;
-        }
-        .btn-play { background: var(--accent); color: white; box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.3); }
-        .btn-play:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.5); }
-        .btn-more { background: rgba(255,255,255,0.08); color: white; backdrop-filter: blur(10px); }
-        .btn-more:hover { background: rgba(255,255,255,0.15); }
+        .btn { padding: 15px 35px; border-radius: 14px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 12px; transition: 0.4s; font-size: 0.9rem; }
+        .btn-play { background: var(--accent); color: white; }
+        .btn-play:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(var(--accent-rgb), 0.4); }
 
-        /* --- Content Layout --- */
-        .main-content { padding-top: 50px; }
-        .row-section { margin-bottom: 40px; padding-left: 5%; }
-        .row-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .main-content { padding-top: 20px; }
+        .row-section { margin-bottom: 60px; padding-left: 5%; }
+        .row-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
 
-        .slider { display: flex; gap: 20px; overflow-x: auto; padding: 20px 0; }
+        .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; }
         
-        /* --- The Movie Card --- */
         .card {
-            min-width: 240px; position: relative; border-radius: 20px;
+            min-width: 220px; position: relative; border-radius: 16px;
             overflow: hidden; cursor: pointer; border: 1px solid var(--border);
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-            text-decoration: none; color: white;
-            display: flex; flex-direction: column;
+            text-decoration: none; color: white; display: flex; flex-direction: column;
         }
-        .card:hover { transform: scale(1.08) translateY(-10px); z-index: 100; border-color: var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .card:hover { transform: scale(1.05) translateY(-10px); border-color: var(--accent); z-index: 10; }
+        .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
         
-        .card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; transition: 0.5s; }
         .card-overlay {
             position: absolute; inset: 0; padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 60%);
             display: flex; flex-direction: column; justify-content: flex-end;
-            opacity: 0; transition: 0.4s;
+            opacity: 0; transition: 0.3s;
         }
         .card:hover .card-overlay { opacity: 1; }
-        .card-title { font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
-        .card-meta { font-size: 0.75rem; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .card-title { font-weight: 800; font-size: 1rem; }
+        .card-meta { font-size: 0.75rem; color: var(--accent); margin-top: 4px; }
 
-        .imdb-tag { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--border); z-index: 10; }
+        .imdb-tag { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.8); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--border); z-index: 5; }
 
         @media (max-width: 768px) {
-            .hero-info h1 { font-size: 3.5rem; }
+            .hero-info h1 { font-size: 3rem; }
             .nav-items, .search-wrapper { display: none; }
-            .hero { height: 70vh; }
+            .hero { height: 60vh; }
         }
     </style>
 </head>
@@ -129,17 +118,15 @@
     <nav id="navbar">
         <a href="index.html" class="logo">FATBOK<span>FLIX</span></a>
         <ul class="nav-items">
-            <li onclick="filterCategory('all')">Ana Sayfa</li>
+            <li onclick="filterCategory('all')" class="active">Ana Sayfa</li>
             <li onclick="filterCategory('dizi')">Diziler</li>
             <li onclick="filterCategory('film')">Filmler</li>
-            <li>Listem</li>
         </ul>
         <div class="search-wrapper">
             <i data-lucide="search" class="search-icon" size="16"></i>
-            <input type="text" id="searchInput" placeholder="Dizi ara..." onkeyup="filterMovies()">
+            <input type="text" id="searchInput" placeholder="Yapım ara..." onkeyup="filterMovies()">
         </div>
         <div style="display: flex; align-items: center; gap: 20px;">
-            <i data-lucide="heart" size="20" style="cursor:pointer"></i>
             <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(45deg, var(--accent), #ff8c00); display: grid; place-items:center; font-weight:800; cursor:pointer;">Ö</div>
         </div>
     </nav>
@@ -149,14 +136,11 @@
         <div class="hero-info reveal">
             <div class="badge-new"><i data-lucide="zap" size="12" fill="currentColor"></i> SEZON FİNALİ YAKINDA</div>
             <h1>A Knight of the <br>Seven Kingdoms</h1>
-            <p>Taht Oyunları'ndan bir asır önce, Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin hikayesi. Kaderleri tüm yedi krallığı değiştirecek.</p>
+            <p>Taht Oyunları'ndan bir asır önce, Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin hikayesi.</p>
             <div class="cta-group">
-                <a href="dizi-izle.html" class="btn btn-play">
+                <a href="#" class="btn btn-play">
                     <i data-lucide="play" fill="white" size="20"></i> ŞİMDİ İZLE
                 </a>
-                <button class="btn btn-more">
-                    <i data-lucide="plus" size="20"></i> LİSTEME EKLE
-                </button>
             </div>
         </div>
     </section>
@@ -166,21 +150,21 @@
             <div class="row-title reveal" id="rowTitle"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar</div>
             <div class="slider" id="movieGrid">
                 
-                <a href="https://vs1.photostack.net/v/Zootopia.2.2025.FHD.WebDL/master.m3u8" class="card reveal movie-item" data-title="Zootropolis 2 Zootopia" data-type="film">
+                <a href="https://vs1.photostack.net/v/Zootopia.2.2025.FHD.WebDL/master.m3u8" class="card reveal movie-item" data-title="Zootropolis 2" data-type="film">
                     <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
                     <img src="https://media.baovanhoa.vn/zoom/1000/Uploaded/nghiemthanh/2026_01_01/1_6_FNCH.jpg" alt="Zootropolis 2">
                     <div class="card-overlay">
                         <div class="card-title">Zootropolis 2</div>
-                        <div class="card-meta">2025 • Film • Animasyon / Macera</div>
+                        <div class="card-meta">2025 • Film • Animasyon</div>
                     </div>
                 </a>
 
                 <a href="dexter-resurrection-izle.html" class="card reveal movie-item" data-title="Dexter Resurrection" data-type="dizi">
                     <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
-                    <img src="https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg" alt="Dexter Resurrection">
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg" alt="Dexter">
                     <div class="card-overlay">
                         <div class="card-title">Dexter: Resurrection</div>
-                        <div class="card-meta">2025 • 9 Bölüm • Suç / Gerilim</div>
+                        <div class="card-meta">2025 • Dizi • Suç</div>
                     </div>
                 </a>
 
@@ -189,49 +173,28 @@
                     <img src="https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg" alt="Mobland">
                     <div class="card-overlay">
                         <div class="card-title">Mobland</div>
-                        <div class="card-meta">2025 • 9 Bölüm • Suç / Aksiyon</div>
+                        <div class="card-meta">2025 • Dizi • Aksiyon</div>
                     </div>
                 </a>
 
-                <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather Baba" data-type="film">
+                <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather" data-type="film">
                     <div class="imdb-tag" style="color: #ec5d00;">9.2</div>
                     <img src="https://communist.red/wp-content/uploads/2022/08/godfather.png" alt="The Godfather">
                     <div class="card-overlay">
                         <div class="card-title">The Godfather</div>
-                        <div class="card-meta">1972 • Film • Suç / Drama</div>
+                        <div class="card-meta">1972 • Film • Suç</div>
                     </div>
                 </a>
 
                 <a href="derry-izle.html" class="card reveal movie-item" data-title="IT Welcome to Derry" data-type="dizi">
                     <div class="imdb-tag">8.4</div>
-                    <img src="https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp" alt="IT Welcome to Derry">
+                    <img src="https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp" alt="Derry">
                     <div class="card-overlay">
                         <div class="card-title">IT: Welcome to Derry</div>
-                        <div class="card-meta">2025 • 8 Bölüm • Korku</div>
+                        <div class="card-meta">2025 • Dizi • Korku</div>
                     </div>
                 </a>
 
-                <a href="dizi-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms" data-type="dizi">
-                    <div class="imdb-tag">8.9</div>
-                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" alt="Poster">
-                    <div class="card-overlay">
-                        <div class="card-title">A Knight of the Seven Kingdoms</div>
-                        <div class="card-meta">2026 • 6 Bölüm • Fantastik</div>
-                    </div>
-                </a>
-
-                <div class="card reveal movie-item" data-title="Ejderha Hanedanı" data-type="film" style="opacity: 0.6;">
-                    <div class="imdb-tag">9.1</div>
-                    <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=400" alt="Poster">
-                    <div class="card-overlay">
-                        <div class="card-title">Ejderha Hanedanı</div>
-                        <div class="card-meta">Yakında • Aksiyon</div>
-                    </div>
-                </div>
-
-                <div class="card reveal movie-item" data-title="Sinema" data-type="film"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"></div>
-                <div class="card reveal movie-item" data-title="Film Dünyası" data-type="film"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"></div>
-                <div class="card reveal movie-item" data-title="Karanlık Sinema" data-type="film"><img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400"></div>
             </div>
         </section>
     </div>
@@ -239,29 +202,21 @@
     <script>
         lucide.createIcons();
 
-        // Navbar Kaydırma Efekti
         window.onscroll = function() {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         };
 
-        // Arama Filtresi
         function filterMovies() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('movie-item');
-            
             for (let i = 0; i < items.length; i++) {
                 let title = items[i].getAttribute('data-title').toLowerCase();
-                if (title.includes(input)) {
-                    items[i].style.display = "flex";
-                } else {
-                    items[i].style.display = "none";
-                }
+                items[i].style.display = title.includes(input) ? "flex" : "none";
             }
         }
 
-        // Kategori Filtresi
         function filterCategory(type) {
             let items = document.querySelectorAll('.movie-item');
             let titleElement = document.getElementById('rowTitle');
@@ -272,13 +227,8 @@
 
             items.forEach(item => {
                 let itemType = item.getAttribute('data-type');
-                if (type === 'all' || itemType === type) {
-                    item.style.display = "flex";
-                } else {
-                    item.style.display = "none";
-                }
+                item.style.display = (type === 'all' || itemType === type) ? "flex" : "none";
             });
-            
             lucide.createIcons();
         }
     </script>
