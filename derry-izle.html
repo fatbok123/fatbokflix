@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATBOKFLIX | Welcome to Derry İzle</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        :root {
+            --bg: #050505; --surface: #121214; --accent: #ff0000; /* Derry Kırmızısı */
+            --text-primary: #ffffff; --text-secondary: #a1a1aa;
+            --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1rem 5%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
+            z-index: 1000; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; text-decoration: none; color: white; }
+        .logo span { color: var(--accent); text-shadow: 0 0 10px rgba(255,0,0,0.5); }
+
+        .container {
+            max-width: 1400px; margin: 100px auto 50px; padding: 0 20px;
+            display: grid; grid-template-columns: 1fr 380px; gap: 30px;
+        }
+
+        .video-wrapper { background: var(--surface); border-radius: 24px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; }
+        video { width: 100%; height: 100%; outline: none; }
+
+        .episode-panel { background: var(--surface); border-radius: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; max-height: 650px; }
+        .panel-header { padding: 20px; border-bottom: 1px solid var(--border); font-weight: 800; display: flex; justify-content: space-between; }
+        .episode-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
+        
+        .ep-card {
+            display: flex; gap: 12px; padding: 10px; border-radius: 12px; cursor: pointer; transition: 0.2s; margin-bottom: 8px; border: 1px solid transparent;
+        }
+        .ep-card:hover { background: rgba(255,255,255,0.03); }
+        .ep-card.active { background: rgba(255, 0, 0, 0.1); border-color: var(--accent); }
+        .ep-thumb { width: 110px; aspect-ratio: 16/9; border-radius: 8px; object-fit: cover; background: #222; }
+        .ep-meta h4 { font-size: 0.85rem; margin-bottom: 2px; }
+        .ep-meta p { font-size: 0.7rem; color: var(--text-secondary); }
+
+        .details { margin-top: 25px; }
+        .details h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .tag { background: var(--glass); padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; margin-right: 8px; border: 1px solid var(--border); }
+
+        @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } .episode-panel { max-height: 400px; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">FATBOK<span>FLIX</span></a>
+        <div style="width: 38px; height: 38px; border-radius: 12px; background: var(--accent); display: grid; place-items:center; font-weight:800; color:white;">D</div>
+    </nav>
+
+    <div class="container">
+        <main>
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <video id="player" controls poster="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg"></video>
+                </div>
+            </div>
+            <div class="details">
+                <span class="tag">2025</span><span class="tag">IMDB 8.4</span><span class="tag" id="current-ep-tag">1. Bölüm</span>
+                <h1 id="movie-title">IT: Welcome to Derry</h1>
+                <p id="movie-desc" style="color: var(--text-secondary); line-height: 1.6;">Derry kasabasının karanlık geçmişine ve Pennywise efsanesinin doğuşuna tanıklık edin. Korku dolu bir serüven sizi bekliyor.</p>
+            </div>
+        </main>
+
+        <aside class="episode-panel">
+            <div class="panel-header">Bölümler <span>Sezon 1</span></div>
+            <div class="episode-list">
+                <div class="ep-card active" onclick="playVideo('https://vs15.pictureflix.org/v/IT.Welcome.to.Derry.S01E01.1080p/master.m3u8', this, '1. Bölüm: Derry’e Hoş Geldiniz')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>1. Bölüm</h4><p>Gerilim Başlıyor</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs10.photofunny.org/v/IT.Welcome.to.Derry.S01E02.1080p/master.m3u8', this, '2. Bölüm: Yeraltındaki Sesler')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>2. Bölüm</h4><p>Korku Yayılıyor</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs10.photostack.net/v/IT.Welcome.to.Derry.S01E03.1080p/master.m3u8', this, '3. Bölüm: Kırmızı Balon')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>3. Bölüm</h4><p>Gerçek Yüz</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs21.photomag.biz/v/IT.Welcome.to.Derry.S01E04.1080p.WebDL.x264.TR.ENG.FilmbolSeries/master.m3u8', this, '4. Bölüm: Saklanacak Yer Yok')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>4. Bölüm</h4><p>Gizem Derinleşiyor</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs22.photoflax.org/v/IT.Welcome.to.Derry.S01E05.1080p.WebDL.x264.TR.ENG.FilmbolSeries/master.m3u8', this, '5. Bölüm: Geçmişin Hayaletleri')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>5. Bölüm</h4><p>Yüzleşme</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs21.photour.org/v/IT.Welcome.to.Derry.S01E06.1080p/master.m3u8', this, '6. Bölüm: Kanalizasyondaki Kabus')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>6. Bölüm</h4><p>Kaçış Yok</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs21.gamephotos.pro/v/IT.Welcome.to.Derry.S01E07.1080p.WebDL/master.m3u8', this, '7. Bölüm: Son Direniş')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>7. Bölüm</h4><p>Karanlık Yaklaşıyor</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs21.photomag.biz/v/IT.Welcome.to.Derry.S01E08.1080p.WebDL.x264.TR.ENG.FilmbolSeries/master.m3u8', this, '8. Bölüm: Sezon Finali')">
+                    <div class="ep-thumb" style="background: url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/11/it-welcome-to-derry-poster.jpg') center/cover;"></div>
+                    <div class="ep-meta"><h4>8. Bölüm</h4><p>Final</p></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const video = document.getElementById('player');
+        const titleEl = document.getElementById('movie-title');
+        const tagEl = document.getElementById('current-ep-tag');
+
+        function playVideo(url, element, title) {
+            document.querySelectorAll('.ep-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            titleEl.innerText = title;
+            tagEl.innerText = title.split(':')[0];
+
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.play();
+            }
+        }
+
+        window.onload = () => {
+            const initial = document.querySelector('.ep-card');
+            playVideo('https://vs15.pictureflix.org/v/IT.Welcome.to.Derry.S01E01.1080p/master.m3u8', initial, '1. Bölüm: Derry’e Hoş Geldiniz');
+        };
+    </script>
+</body>
+</html>
