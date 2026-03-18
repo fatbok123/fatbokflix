@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATBOKFLIX | Modern Cinema Experience</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #121214;
+            --accent: #ec5d00; /* Senin imza turuncun */
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 5%;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+
+        .search-container {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-container input {
+            width: 100%;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 10px 15px 10px 45px;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus { border-color: var(--accent); background: rgba(255,255,255,0.08); }
+        .search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+        }
+
+        /* --- Player Area --- */
+        .video-wrapper {
+            background: var(--surface);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+        }
+
+        video { width: 100%; height: 100%; }
+
+        .video-controls-overlay {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, #18181b, #121214);
+        }
+
+        .source-selector { display: flex; gap: 10px; }
+        .source-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .source-btn.active { background: var(--accent); border-color: var(--accent); }
+
+        /* --- Episode Panel --- */
+        .episode-panel {
+            background: var(--surface);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            max-height: 750px;
+        }
+
+        .panel-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .episode-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .ep-card {
+            display: flex;
+            gap: 15px;
+            padding: 12px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+        }
+
+        .ep-card:hover { background: rgba(255,255,255,0.03); }
+        .ep-card.active { background: rgba(236, 93, 0, 0.1); border-color: rgba(236, 93, 0, 0.3); }
+
+        .ep-thumb {
+            width: 120px;
+            aspect-ratio: 16/9;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .ep-meta h4 { font-size: 0.9rem; margin-bottom: 4px; }
+        .ep-meta p { font-size: 0.75rem; color: var(--text-secondary); }
+
+        /* --- Content Info --- */
+        .movie-details { margin-top: 30px; }
+        .movie-details h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; }
+        .tags { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tag { background: var(--glass); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; border: 1px solid var(--border); }
+        .desc { color: var(--text-secondary); max-width: 800px; line-height: 1.7; }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; }
+            .episode-panel { max-height: 500px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">FATBOK<span>FLIX</span></div>
+        <div class="search-container">
+            <i data-lucide="search" class="search-icon" size="18"></i>
+            <input type="text" placeholder="Dizi veya film ara...">
+        </div>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <i data-lucide="heart" style="cursor:pointer"></i>
+            <div style="width: 38px; height: 38px; border-radius: 12px; background: var(--accent); display: grid; place-items:center; font-weight:800;">F</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main>
+            <div class="video-wrapper">
+                <div class="video-container">
+                    <video id="main-video" controls poster="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=1200"></video>
+                </div>
+                <div class="video-controls-overlay">
+                    <div class="source-selector">
+                        <button class="source-btn active">Alternatif 1</button>
+                        <button class="source-btn">Alternatif 2</button>
+                        <button class="source-btn">Rapidrame</button>
+                    </div>
+                    <div style="display:flex; gap:15px;">
+                        <i data-lucide="share-2" size="20" style="cursor:pointer"></i>
+                        <i data-lucide="download" size="20" style="cursor:pointer"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-details">
+                <div class="tags">
+                    <span class="tag">2026</span>
+                    <span class="tag">Aksiyon</span>
+                    <span class="tag">IMDB 8.9</span>
+                    <span class="tag" style="color: var(--accent); font-weight: bold;">Full HD</span>
+                </div>
+                <h1>A Knight of the Seven Kingdoms</h1>
+                <p class="desc">
+                    Game of Thrones evreninde geçen bu efsanevi hikayede, Sör Duncan ve minik yaveri Egg'in Westeros semalarındaki ilk maceralarına tanık olun. Modern efektler ve büyüleyici hikaye anlatımıyla yayında.
+                </p>
+            </div>
+        </main>
+
+        <aside class="episode-panel">
+            <div class="panel-header">
+                <h3 style="font-weight: 800;">Bölümler</h3>
+                <span style="color: var(--text-secondary); font-size: 0.8rem;">Sezon 1</span>
+            </div>
+            <div class="episode-list">
+                <div class="ep-card active" onclick="loadEpisode('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+                    <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=200" class="ep-thumb">
+                    <div class="ep-meta">
+                        <h4>1. Bölüm: Başlangıç</h4>
+                        <p>54 dk • Yayında</p>
+                    </div>
+                </div>
+                <div class="ep-card">
+                    <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=200" class="ep-thumb">
+                    <div class="ep-meta">
+                        <h4>2. Bölüm: Krallığın Yolu</h4>
+                        <p>50 dk • Yayında</p>
+                    </div>
+                </div>
+                <div class="ep-card">
+                    <img src="https://images.unsplash.com/photo-1514539079130-25950c84af65?q=80&w=200" class="ep-thumb">
+                    <div class="ep-meta">
+                        <h4>3. Bölüm: Gece Nöbeti</h4>
+                        <p>58 dk • Yayında</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Hls.js Video Player Mantığı
+        const video = document.getElementById('main-video');
+        const defaultStream = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'; // Örnek m3u8
+
+        function loadEpisode(url) {
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+            }
+        }
+
+        // Sayfa yüklendiğinde ilk bölümü hazırla
+        window.onload = () => loadEpisode(defaultStream);
+
+        // Arama ve tıklama animasyonları gibi ufak detaylar buraya eklenebilir
+    </script>
+</body>
+</html>
