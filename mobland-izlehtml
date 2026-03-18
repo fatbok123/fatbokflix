@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FATBOKFLIX | Mobland (2025) Full HD İzle</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        :root {
+            --bg: #030303; --surface: #0a0a0a; --accent: #ec5d00;
+            --text-primary: #ffffff; --text-secondary: #71717a;
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: none; }
+        body { background-color: var(--bg); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1rem 5%;
+            background: rgba(3, 3, 3, 0.9); backdrop-filter: blur(25px);
+            z-index: 1000; display: flex; align-items: center; border-bottom: 1px solid var(--border);
+        }
+        .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: white; letter-spacing: -1.5px; }
+        .logo span { color: var(--accent); }
+
+        .container { max-width: 1400px; margin: 120px auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 400px; gap: 40px; }
+
+        .player-card { background: #000; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 30px 70px rgba(0,0,0,0.6); }
+        .video-container { width: 100%; aspect-ratio: 16/9; position: relative; }
+        video { width: 100%; height: 100%; outline: none; }
+
+        .playlist-card { background: var(--surface); border-radius: 20px; padding: 25px; border: 1px solid var(--border); height: fit-content; }
+        .playlist-header { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+        
+        .ep-list { max-height: 500px; overflow-y: auto; padding-right: 10px; }
+        .ep-item {
+            width: 100%; padding: 18px; background: rgba(255,255,255,0.02); border: 1px solid transparent;
+            border-radius: 14px; color: white; text-align: left; cursor: pointer; margin-bottom: 10px;
+            transition: 0.3s; display: flex; align-items: center; justify-content: space-between;
+        }
+        .ep-item:hover { background: rgba(236, 93, 0, 0.1); border-color: rgba(236,93,0,0.2); }
+        .ep-item.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 5px 20px rgba(236,93,0,0.3); }
+
+        .meta-info { margin-top: 30px; }
+        .meta-info h1 { font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 15px; }
+        .meta-info p { color: var(--text-secondary); line-height: 1.8; font-size: 1.15rem; max-width: 800px; }
+
+        @media (max-width: 1100px) { .container { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <nav><a href="index.html" class="logo">FATBOK<span>FLIX</span></a></nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="player-card">
+                <div class="video-container">
+                    <video id="hlsPlayer" controls poster="https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg"></video>
+                </div>
+            </div>
+            <div class="meta-info">
+                <h1>Mobland</h1>
+                <p>Derin güneyin tozlu yollarında, hayatta kalmak için sınırları zorlayan bir mücadele. Suç ve adaletin birbirine karıştığı bu dünyada herkes kendi kuralını koyar.</p>
+            </div>
+        </div>
+
+        <div class="playlist-card">
+            <div class="playlist-header">
+                <h3 style="display:flex; align-items:center; gap:10px;"><i data-lucide="tv" color="#ec5d00"></i> Sezon 1</h3>
+                <span style="font-size:0.8rem; background:rgba(236,93,0,0.1); padding:5px 10px; border-radius:8px; color:var(--accent); font-weight:700;">9 BÖLÜM</span>
+            </div>
+            
+            <div class="ep-list">
+                <button class="ep-item active" onclick="loadVideo('https://vs14.photoflick.org/v/MobLand.S01E01.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>1. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs10.pictureflix.org/v/MobLand.S01E02.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>2. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs11.pictureflix.org/v/MobLand.S01E03.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>3. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs19.photoflax.org/v/MobLand.S01E04.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>4. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs16.gamephotos.pro/v/MobLand.S01E05.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>5. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs13.photoflax.org/v/MobLand.S01E06.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>6. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs9.photofunny.org/v/MobLand.S01E07.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>7. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs19.photofunny.org/v/MobLand.S01E08.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>8. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+                <button class="ep-item" onclick="loadVideo('https://vs19.photoflix.org/v/MobLand.S01E09.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)"><span>9. BÖLÜM</span> <i data-lucide="play-circle" size="20"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const video = document.getElementById('hlsPlayer');
+
+        function loadVideo(url, element) {
+            document.querySelectorAll('.ep-item').forEach(item => item.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(url);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = url;
+                video.play();
+            }
+        }
+        loadVideo('https://vs14.photoflick.org/v/MobLand.S01E01.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', document.querySelector('.ep-item'));
+    </script>
+</body>
+</html>
