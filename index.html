@@ -39,12 +39,12 @@
         }
         nav.scrolled { background: var(--bg); border-bottom: 1px solid var(--border); }
 
-        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -2px; cursor: pointer; }
+        .logo { font-size: 1.8rem; font-weight: 800; letter-spacing: -2px; cursor: pointer; text-decoration: none; color: white; }
         .logo span { color: var(--accent); text-shadow: 0 0 15px rgba(var(--accent-rgb), 0.5); }
 
         .nav-items { display: flex; gap: 25px; list-style: none; font-size: 0.85rem; font-weight: 600; color: var(--text-dim); }
         .nav-items li { cursor: pointer; transition: 0.3s; }
-        .nav-items li:hover { color: var(--accent); }
+        .nav-items li:hover, .nav-items li.active { color: var(--accent); }
 
         .search-wrapper { position: relative; width: 300px; }
         .search-wrapper input {
@@ -100,6 +100,7 @@
             overflow: hidden; cursor: pointer; border: 1px solid var(--border);
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none; color: white;
+            display: flex; flex-direction: column;
         }
         .card:hover { transform: scale(1.08) translateY(-10px); z-index: 100; border-color: var(--accent); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         
@@ -114,7 +115,7 @@
         .card-title { font-weight: 800; font-size: 1rem; margin-bottom: 5px; }
         .card-meta { font-size: 0.75rem; color: var(--accent); display: flex; align-items: center; gap: 10px; }
 
-        .imdb-tag { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--border); }
+        .imdb-tag { position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--border); z-index: 10; }
 
         @media (max-width: 768px) {
             .hero-info h1 { font-size: 3.5rem; }
@@ -126,11 +127,11 @@
 <body>
 
     <nav id="navbar">
-        <div class="logo">FATBOK<span>FLIX</span></div>
+        <a href="index.html" class="logo">FATBOK<span>FLIX</span></a>
         <ul class="nav-items">
-            <li>Ana Sayfa</li>
-            <li>Diziler</li>
-            <li>Filmler</li>
+            <li onclick="filterCategory('all')">Ana Sayfa</li>
+            <li onclick="filterCategory('dizi')">Diziler</li>
+            <li onclick="filterCategory('film')">Filmler</li>
             <li>Listem</li>
         </ul>
         <div class="search-wrapper">
@@ -162,10 +163,19 @@
 
     <div class="main-content">
         <section class="row-section">
-            <div class="row-title reveal"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar</div>
+            <div class="row-title reveal" id="rowTitle"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar</div>
             <div class="slider" id="movieGrid">
                 
-                <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather Baba">
+                <a href="dexter-resurrection-izle.html" class="card reveal movie-item" data-title="Dexter Resurrection" data-type="dizi">
+                    <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
+                    <img src="https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg" alt="Dexter Resurrection">
+                    <div class="card-overlay">
+                        <div class="card-title">Dexter: Resurrection</div>
+                        <div class="card-meta">2025 • 9 Bölüm • Suç / Gerilim</div>
+                    </div>
+                </a>
+
+                <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather Baba" data-type="film">
                     <div class="imdb-tag" style="color: #ec5d00;">9.2</div>
                     <img src="https://communist.red/wp-content/uploads/2022/08/godfather.png" alt="The Godfather">
                     <div class="card-overlay">
@@ -174,7 +184,7 @@
                     </div>
                 </a>
 
-                <a href="derry-izle.html" class="card reveal movie-item" data-title="IT Welcome to Derry">
+                <a href="derry-izle.html" class="card reveal movie-item" data-title="IT Welcome to Derry" data-type="dizi">
                     <div class="imdb-tag">8.4</div>
                     <img src="https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp" alt="IT Welcome to Derry">
                     <div class="card-overlay">
@@ -183,7 +193,7 @@
                     </div>
                 </a>
 
-                <a href="dizi-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms">
+                <a href="dizi-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms" data-type="dizi">
                     <div class="imdb-tag">8.9</div>
                     <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" alt="Poster">
                     <div class="card-overlay">
@@ -192,7 +202,7 @@
                     </div>
                 </a>
 
-                <div class="card reveal movie-item" data-title="Ejderha Hanedanı" style="opacity: 0.6;">
+                <div class="card reveal movie-item" data-title="Ejderha Hanedanı" data-type="film" style="opacity: 0.6;">
                     <div class="imdb-tag">9.1</div>
                     <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=400" alt="Poster">
                     <div class="card-overlay">
@@ -201,9 +211,9 @@
                     </div>
                 </div>
 
-                <div class="card reveal movie-item" data-title="Sinema"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"></div>
-                <div class="card reveal movie-item" data-title="Film Dünyası"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"></div>
-                <div class="card reveal movie-item" data-title="Karanlık Sinema"><img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Sinema" data-type="film"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Film Dünyası" data-type="film"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"></div>
+                <div class="card reveal movie-item" data-title="Karanlık Sinema" data-type="film"><img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?q=80&w=400"></div>
             </div>
         </section>
     </div>
@@ -218,7 +228,7 @@
             else nav.classList.remove('scrolled');
         };
 
-        // Arama Filtresi (JavaScript ile anlık)
+        // Arama Filtresi
         function filterMovies() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('movie-item');
@@ -226,11 +236,33 @@
             for (let i = 0; i < items.length; i++) {
                 let title = items[i].getAttribute('data-title').toLowerCase();
                 if (title.includes(input)) {
-                    items[i].style.display = "";
+                    items[i].style.display = "flex";
                 } else {
                     items[i].style.display = "none";
                 }
             }
+        }
+
+        // Kategori Filtresi
+        function filterCategory(type) {
+            let items = document.querySelectorAll('.movie-item');
+            let titleElement = document.getElementById('rowTitle');
+
+            // Başlığı güncelle
+            if(type === 'dizi') titleElement.innerHTML = '<i data-lucide="tv" color="#ec5d00"></i> Popüler Diziler';
+            else if(type === 'film') titleElement.innerHTML = '<i data-lucide="clapperboard" color="#ec5d00"></i> Kült Filmler';
+            else titleElement.innerHTML = '<i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar';
+
+            items.forEach(item => {
+                let itemType = item.getAttribute('data-type');
+                if (type === 'all' || itemType === type) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+            
+            lucide.createIcons();
         }
     </script>
 </body>
