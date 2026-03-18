@@ -11,89 +11,49 @@
 
     <style>
         :root {
-            --bg: #050505;
-            --surface: #121214;
-            --accent: #ec5d00; 
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #050505; --surface: #121214; --accent: #ec5d00; 
+            --text-primary: #ffffff; --text-secondary: #a1a1aa;
+            --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text-primary);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
+        body { background-color: var(--bg); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
 
-        /* Navbar */
         nav {
-            position: fixed;
-            top: 0; width: 100%;
-            padding: 1rem 5%;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
+            position: fixed; top: 0; width: 100%; padding: 1rem 5%;
+            background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px);
+            z-index: 1000; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border);
         }
         .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; }
         .logo span { color: var(--accent); }
 
-        /* Layout */
         .container {
-            max-width: 1400px;
-            margin: 100px auto 50px;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 30px;
+            max-width: 1400px; margin: 100px auto 50px; padding: 0 20px;
+            display: grid; grid-template-columns: 1fr 380px; gap: 30px;
         }
 
-        /* Video Player */
-        .video-wrapper {
-            background: var(--surface);
-            border-radius: 24px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
+        .video-wrapper { background: var(--surface); border-radius: 24px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
         .video-container { width: 100%; aspect-ratio: 16/9; background: #000; }
         video { width: 100%; height: 100%; outline: none; }
 
-        /* Episode List */
-        .episode-panel {
-            background: var(--surface);
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            max-height: 600px;
-        }
-        .panel-header { padding: 20px; border-bottom: 1px solid var(--border); font-weight: 800; }
+        .episode-panel { background: var(--surface); border-radius: 24px; border: 1px solid var(--border); display: flex; flex-direction: column; max-height: 650px; }
+        .panel-header { padding: 20px; border-bottom: 1px solid var(--border); font-weight: 800; display: flex; justify-content: space-between; }
         .episode-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
+        
         .ep-card {
-            display: flex; gap: 12px; padding: 10px; border-radius: 12px;
-            cursor: pointer; transition: 0.2s; margin-bottom: 8px; border: 1px solid transparent;
+            display: flex; gap: 12px; padding: 10px; border-radius: 12px; cursor: pointer; transition: 0.2s; margin-bottom: 8px; border: 1px solid transparent;
         }
         .ep-card:hover { background: rgba(255,255,255,0.03); }
         .ep-card.active { background: rgba(236, 93, 0, 0.1); border-color: var(--accent); }
-        .ep-thumb { width: 100px; aspect-ratio: 16/9; border-radius: 8px; object-fit: cover; }
+        .ep-thumb { width: 110px; aspect-ratio: 16/9; border-radius: 8px; object-fit: cover; }
         .ep-meta h4 { font-size: 0.85rem; margin-bottom: 2px; }
         .ep-meta p { font-size: 0.7rem; color: var(--text-secondary); }
 
-        /* Info */
         .details { margin-top: 25px; }
         .details h1 { font-size: 2.2rem; margin-bottom: 10px; }
         .tag { background: var(--glass); padding: 4px 12px; border-radius: 8px; font-size: 0.8rem; margin-right: 8px; border: 1px solid var(--border); }
 
-        @media (max-width: 1000px) {
-            .container { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1000px) { .container { grid-template-columns: 1fr; } .episode-panel { max-height: 400px; } }
     </style>
 </head>
 <body>
@@ -107,62 +67,72 @@
         <main>
             <div class="video-wrapper">
                 <div class="video-container">
-                    <video id="player" controls 
-                        poster="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg">
-                    </video>
+                    <video id="player" controls poster="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg"></video>
                 </div>
             </div>
             <div class="details">
-                <span class="tag">2026</span><span class="tag">IMDB 8.9</span><span class="tag">Sezon 1</span>
+                <span class="tag">2026</span><span class="tag">IMDB 8.9</span><span class="tag" id="current-ep-tag">1. Bölüm</span>
                 <h1 id="movie-title">A Knight of the Seven Kingdoms</h1>
-                <p style="color: var(--text-secondary); line-height: 1.6;">
-                    Westeros'un tozlu yollarında bir şövalye ve yaverinin destansı hikayesi.
-                </p>
+                <p id="movie-desc" style="color: var(--text-secondary); line-height: 1.6;">Westeros'un tozlu yollarında bir şövalye ve yaverinin destansı hikayesi.</p>
             </div>
         </main>
 
         <aside class="episode-panel">
-            <div class="panel-header">Bölümler</div>
-            <div class="episode-list" id="episode-list">
-                <div class="ep-card active" onclick="playVideo('https://vs7.photofunny.org/v/A.Knight.of.the.Seven.Kingdoms.S01E01.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this)">
+            <div class="panel-header">Bölümler <span>Sezon 1</span></div>
+            <div class="episode-list">
+                <div class="ep-card active" onclick="playVideo('https://vs7.photofunny.org/v/A.Knight.of.the.Seven.Kingdoms.S01E01.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '1. Bölüm: Başlangıç')">
                     <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
-                    <div class="ep-meta">
-                        <h4>1. Bölüm:  The Hedge Knight</h4>
-                        <p>42 Dakika</p>
-                    </div>
+                    <div class="ep-meta"><h4>1. Bölüm: Başlangıç</h4><p>54 Dakika</p></div>
                 </div>
+                <div class="ep-card" onclick="playVideo('https://vs8.photofunny.org/v/A.Knight.of.the.Seven.Kingdoms.S01E02.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '2. Bölüm: Ashford Turnuvası')">
+                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
+                    <div class="ep-meta"><h4>2. Bölüm: Ashford</h4><p>50 Dakika</p></div>
                 </div>
+                <div class="ep-card" onclick="playVideo('https://vs1.gamephotos.pro/v/A.Knight.of.the.Seven.Kingdoms.S01E03.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '3. Bölüm: Bir Şövalyenin Yemini')">
+                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
+                    <div class="ep-meta"><h4>3. Bölüm: Yemin</h4><p>52 Dakika</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs4.photostack.net/v/A.Knight.of.the.Seven.Kingdoms.S01E04.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '4. Bölüm: Ejderhanın Kanı')">
+                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
+                    <div class="ep-meta"><h4>4. Bölüm: Ejderha</h4><p>48 Dakika</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs5.gamephotos.pro/v/A.Knight.of.the.Seven.Kingdoms.S01E05.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '5. Bölüm: Kışın Sesi')">
+                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
+                    <div class="ep-meta"><h4>5. Bölüm: Kış</h4><p>55 Dakika</p></div>
+                </div>
+                <div class="ep-card" onclick="playVideo('https://vs4.photomag.biz/v/A.Knight.of.the.Seven.Kingdoms.S01E06.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', this, '6. Bölüm: Final')">
+                    <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" class="ep-thumb">
+                    <div class="ep-meta"><h4>6. Bölüm: Final</h4><p>60 Dakika</p></div>
+                </div>
+            </div>
         </aside>
     </div>
 
     <script>
         lucide.createIcons();
         const video = document.getElementById('player');
+        const titleEl = document.getElementById('movie-title');
+        const tagEl = document.getElementById('current-ep-tag');
 
-        function playVideo(url, element) {
-            // Aktif sınıfını değiştir
+        function playVideo(url, element, title) {
             document.querySelectorAll('.ep-card').forEach(card => card.classList.remove('active'));
             element.classList.add('active');
+            titleEl.innerText = title;
+            tagEl.innerText = title.split(':')[0]; // Etiketi "1. Bölüm" gibi günceller
 
             if (Hls.isSupported()) {
                 const hls = new Hls();
                 hls.loadSource(url);
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                    video.play();
-                });
+                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
-                video.addEventListener('loadedmetadata', function() {
-                    video.play();
-                });
+                video.addEventListener('loadedmetadata', () => video.play());
             }
         }
 
-        // Sayfa açıldığında otomatik yükle
         window.onload = () => {
-            const initialUrl = 'https://vs7.photofunny.org/v/A.Knight.of.the.Seven.Kingdoms.S01E01.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8';
-            playVideo(initialUrl, document.querySelector('.ep-card'));
+            playVideo('https://vs7.photofunny.org/v/A.Knight.of.the.Seven.Kingdoms.S01E01.WEB-DL.1080p.H.265-HDM.DUAL/master.m3u8', document.querySelector('.ep-card'), '1. Bölüm: Başlangıç');
         };
     </script>
 </body>
