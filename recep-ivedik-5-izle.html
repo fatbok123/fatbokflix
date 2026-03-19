@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recep İvedik 5 İzle | FATBOKFLIX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        :root { --bg: #020202; --accent: #ec5d00; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .player-container { width: 90%; max-width: 1000px; margin-top: 80px; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 0 50px rgba(236, 93, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); }
+        video { width: 100%; display: block; background: #000; }
+        .info-panel { width: 90%; max-width: 1000px; margin-top: 30px; padding: 20px; }
+        .info-panel h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
+        .info-panel p { color: #94a3b8; line-height: 1.6; }
+        .back-btn { position: absolute; top: 20px; left: 5%; color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; z-index: 100; }
+        .back-btn:hover { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Geri Dön</a>
+    <div class="player-container">
+        <video id="video" controls crossorigin playsinline poster="https://s1.dmcdn.net/v/Ruae61epBQ5bw2BZb/x1080"></video>
+    </div>
+    <div class="info-panel">
+        <h1>Recep İvedik 5</h1>
+        <p>Vefat eden şoför tanıdığının görevini üstlenen Recep, milli sporcuları Üsküp'e götürürken kendini spor müsabakalarının tam ortasında bulur.</p>
+    </div>
+    <script>
+        var video = document.getElementById('video');
+        var videoSrc = 'https://vs11.photoflax.org/v/Recep.Ivedik.5.WEB-DL.1080p.H.264-HdT/master.m3u8';
+        if (Hls.isSupported()) {
+            var hls = new Hls(); hls.loadSource(videoSrc); hls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = videoSrc; }
+    </script>
+</body>
+</html>
