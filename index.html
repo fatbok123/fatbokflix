@@ -53,16 +53,18 @@
         .search-wrapper input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
 
+        /* HERO GÜNCELLEMESİ */
         .hero {
             position: relative; height: 85vh; width: 100%;
             display: flex; align-items: center; padding: 0 5%;
+            overflow: hidden;
         }
         .hero-video-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to right, var(--bg) 20%, transparent 70%),
-                        linear-gradient(to top, var(--bg) 10%, transparent 40%),
-                        url('https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg') center/cover;
+            background-size: cover;
+            background-position: center;
             z-index: -1;
+            transition: background-image 1.2s ease-in-out;
         }
 
         .hero-info { max-width: 650px; }
@@ -85,6 +87,7 @@
 
         .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; scroll-behavior: smooth; }
         
+        /* GÖRSEL ŞÖLEN: KART PARLAMA EFEKTİ */
         .card {
             min-width: 220px; 
             max-width: 220px; 
@@ -93,6 +96,13 @@
             transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
             text-decoration: none; color: white; display: flex; flex-direction: column;
         }
+        .card::after {
+            content: ''; position: absolute; inset: 0; border-radius: 16px; padding: 2px;
+            background: linear-gradient(45deg, transparent, var(--accent), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude; opacity: 0; transition: 0.5s;
+        }
+        .card:hover::after { opacity: 1; }
         .card:hover { transform: scale(1.05) translateY(-10px); border-color: var(--accent); z-index: 10; }
         
         .card img { 
@@ -142,14 +152,14 @@
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-video-bg"></div>
+    <section class="hero" id="heroSection">
+        <div class="hero-video-bg" id="heroBg"></div>
         <div class="hero-info reveal">
-            <div class="badge-new"><i data-lucide="zap" size="12" fill="currentColor"></i> YENİ SEZON YAKINDA</div>
-            <h1>Dexter: <br>Resurrection</h1>
-            <p>Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle geçmişin hayaletleri ve yeni avlarıyla yüzleşmek için tekrar karşımızda.</p>
+            <div class="badge-new" id="heroBadge"><i data-lucide="zap" size="12" fill="currentColor"></i> YENİ SEZON YAKINDA</div>
+            <h1 id="heroTitleDisplay">Dexter: <br>Resurrection</h1>
+            <p id="heroDesc">Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle geçmişin hayaletleri ve yeni avlarıyla yüzleşmek için tekrar karşımızda.</p>
             <div class="cta-group">
-                <a href="dexter-resurrection-izle.html" class="btn btn-play">
+                <a href="#" id="heroLink" class="btn btn-play">
                     <i data-lucide="play" fill="white" size="20"></i> ŞİMDİ İZLE
                 </a>
             </div>
@@ -221,6 +231,53 @@
 
     <script>
         lucide.createIcons();
+
+        // DINAMIK HERO DATA
+        const heroData = [
+            {
+                title: "Dexter: <br>Resurrection",
+                desc: "Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle tekrar karşımızda.",
+                img: "https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg",
+                badge: "YENİ SEZON YAKINDA",
+                link: "dexter-resurrection-izle.html"
+            },
+            {
+                title: "Zootropolis 2",
+                desc: "Nick ve Judy, şehri alt üst edecek yepyeni bir gizemi çözmek için geri dönüyor.",
+                img: "https://media.baovanhoa.vn/zoom/1000/Uploaded/nghiemthanh/2026_01_01/1_6_FNCH.jpg",
+                badge: "SİNEMALARDA",
+                link: "zootropolis-2-izle.html"
+            },
+            {
+                title: "A Knight of the <br>Seven Kingdoms",
+                desc: "Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin hikayesi.",
+                img: "https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg",
+                badge: "YENİ DİZİ",
+                link: "a-knight-of-the-seven-kingdoms-izle.html"
+            }
+        ];
+
+        let currentHero = 0;
+        function updateHero() {
+            const data = heroData[currentHero];
+            const bg = document.getElementById('heroBg');
+            const title = document.getElementById('heroTitleDisplay');
+            const desc = document.getElementById('heroDesc');
+            const badge = document.getElementById('heroBadge');
+            const link = document.getElementById('heroLink');
+
+            bg.style.backgroundImage = `linear-gradient(to right, var(--bg) 20%, transparent 70%), linear-gradient(to top, var(--bg) 10%, transparent 40%), url('${data.img}')`;
+            title.innerHTML = data.title;
+            desc.innerText = data.desc;
+            badge.innerHTML = `<i data-lucide="zap" size="12" fill="currentColor"></i> ${data.badge}`;
+            link.href = data.link;
+            
+            lucide.createIcons();
+            currentHero = (currentHero + 1) % heroData.length;
+        }
+
+        setInterval(updateHero, 5000);
+        updateHero();
 
         window.onscroll = function() {
             const nav = document.getElementById('navbar');
