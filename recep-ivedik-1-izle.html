@@ -3,53 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recep İvedik 1 | FATBOKFLIX</title>
-    
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-
+    <title>Recep İvedik 1 | FATBOK TV</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --accent: #ec5d00; --panel: #111113; }
-        body { background: var(--bg); color: white; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
-        .player-container { width: 100%; max-width: 1000px; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.9); background: #000; border: 1px solid rgba(255,255,255,0.05); }
-        .video-js { width: 100%; aspect-ratio: 16/9; }
-        
-        /* Turuncu Play Butonu */
-        .vjs-big-play-button { background-color: var(--accent) !important; border: none !important; border-radius: 50% !important; width: 70px !important; height: 70px !important; line-height: 70px !important; margin-top: -35px !important; margin-left: -35px !important; }
-        
-        .info-panel { width: 100%; max-width: 960px; margin-top: 25px; padding: 20px; background: var(--panel); border-radius: 12px; }
-        .badge { display: inline-block; padding: 5px 12px; background: rgba(236, 93, 0, 0.15); color: var(--accent); border-radius: 6px; font-weight: bold; margin-bottom: 10px; }
+        body { background: #050505; color: white; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .video-wrapper { width: 100%; max-width: 900px; background: #000; border-radius: 15px; overflow: hidden; box-shadow: 0 0 40px rgba(236, 93, 0, 0.3); border: 1px solid #333; }
+        video { width: 100%; aspect-ratio: 16/9; outline: none; }
+        .info { margin-top: 20px; text-align: center; }
+        h1 { color: #ec5d00; margin-bottom: 5px; }
+        p { opacity: 0.6; }
     </style>
 </head>
 <body>
 
-    <div class="player-container">
-        <video id="fatbok-player" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
-            <source src="https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8" type="application/x-mpegURL">
-        </video>
+    <div class="video-wrapper">
+        <video id="video" controls autoplay playsinline crossorigin="anonymous"></video>
     </div>
 
-    <div class="info-panel">
-        <div class="badge">1080P HD</div>
-        <h1 style="margin:0; color:var(--accent);">Recep İvedik 1</h1>
-        <p style="color:#999; line-height:1.6;">Görüntüde hata alırsanız sayfayı yenileyin veya farklı bir tarayıcıda (Chrome/Edge) deneyin.</p>
+    <div class="info">
+        <h1>Recep İvedik 1</h1>
+        <p>Eğer video hala açılmıyorsa link patlamış olabilir.</p>
     </div>
 
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <script>
-        var player = videojs('fatbok-player', {
-            fluid: true,
-            autoplay: false,
-            playbackRates: [0.5, 1, 1.25, 1.5, 2]
-        });
+        var video = document.getElementById('video');
+        // Yeni bir link deniyoruz (Eski link patlamış olabilir)
+        var videoSrc = 'https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8';
 
-        // Hata durumunda otomatik farklı yöntem denemesi
-        player.on('error', function() {
-            var error = player.error();
-            console.log('Hata Kodu:', error.code);
-            console.log('Hata Mesajı:', error.message);
-        });
+        if (Hls.isSupported()) {
+            var hls = new Hls({
+                debug: false,
+                enableWorker: true,
+                lowLatencyMode: true,
+            });
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play().catch(() => {
+                    console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor.");
+                });
+            });
+
+            // Hata Yakalayıcı
+            hls.on(Hls.Events.ERROR, function (event, data) {
+                if (data.fatal) {
+                    switch (data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.error("Ağ hatası: Linke ulaşılamıyor.");
+                            hls.startLoad();
+                            break;
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.error("Medya hatası: Video çözülemiyor.");
+                            hls.recoverMediaError();
+                            break;
+                        default:
+                            hls.destroy();
+                            break;
+                    }
+                }
+            });
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+        }
     </script>
 </body>
 </html>
