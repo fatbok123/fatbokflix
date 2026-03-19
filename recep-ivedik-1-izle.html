@@ -4,39 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recep İvedik 1 İzle | FATBOKFLIX</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@videojs/themes@1.0.1/dist/city/index.css" rel="stylesheet">
+
     <style>
-        :root { --bg: #020202; --accent: #ec5d00; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .player-container { width: 90%; max-width: 1000px; margin-top: 80px; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 0 50px rgba(236, 93, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); }
-        video { width: 100%; display: block; background: #000; }
-        .info-panel { width: 90%; max-width: 1000px; margin-top: 30px; padding: 20px; }
-        .info-panel h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
-        .info-panel p { color: #94a3b8; line-height: 1.6; }
-        .back-btn { position: absolute; top: 20px; left: 5%; color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; z-index: 100; }
+        :root { --bg: #050505; --accent: #ec5d00; --text: #ffffff; --panel: #111113; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+
+        .back-btn { 
+            position: absolute; 
+            top: 25px; 
+            left: 5%; 
+            color: rgba(255,255,255,0.6); 
+            text-decoration: none; 
+            font-size: 14px;
+            transition: 0.3s; 
+            z-index: 100; 
+        }
         .back-btn:hover { color: var(--accent); }
+
+        /* Player Konteyner */
+        .player-container { 
+            width: 95%; 
+            max-width: 1000px; 
+            margin-top: 80px; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Video.js Özelleştirme */
+        .video-js.vjs-theme-city {
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+        .vjs-theme-city .vjs-big-play-button {
+            background-color: var(--accent);
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            line-height: 80px;
+        }
+
+        .info-panel { 
+            width: 95%; 
+            max-width: 1000px; 
+            margin-top: 30px; 
+            padding: 25px; 
+            background: var(--panel);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+        .info-panel h1 { font-size: 2.2rem; font-weight: 800; margin: 0 0 10px 0; color: var(--accent); }
+        .info-panel p { color: #94a3b8; line-height: 1.7; margin: 0; font-size: 1.1rem; }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(236, 93, 0, 0.1);
+            color: var(--accent);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">← Ana Sayfaya Dön</a>
+
+    <a href="index.html" class="back-btn">← ANA SAYFAYA DÖN</a>
+
     <div class="player-container">
-        <video id="video" controls crossorigin playsinline poster="https://image.kanald.com.tr/i/kanald/100/1200x0/5dafff2f2678991668dbc009.jpg"></video>
+        <video 
+            id="fatbok-player" 
+            class="video-js vjs-theme-city vjs-big-play-centered" 
+            controls 
+            preload="auto" 
+            crossorigin="anonymous"
+            poster="https://image.kanald.com.tr/i/kanald/100/1200x0/5dafff2f2678991668dbc009.jpg">
+            <source src="https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8" type="application/x-mpegURL">
+        </video>
     </div>
+
     <div class="info-panel">
+        <div class="badge">1080P FULL HD</div>
         <h1>Recep İvedik 1</h1>
-        <p>Sokakta bulduğu bir cüzdanın sahibinin Antalya'da yaşayan önemli bir iş adamı olduğunu öğrenen Recep, cüzdanı teslim etmek için yola koyulur. Komedi klasiği burada başlıyor.</p>
+        <p>Sokakta bulduğu bir cüzdanın sahibinin Antalya'da yaşayan önemli bir iş adamı olduğunu öğrenen Recep, cüzdanı teslim etmek için yola koyulur. Komedi efsanesinin ilk adımı FATBOKFLIX kalitesiyle burada.</p>
     </div>
+
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <script>
-        var video = document.getElementById('video');
-        var videoSrc = 'https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8';
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-        }
+        const player = videojs('fatbok-player', {
+            fluid: true,
+            playbackRates: [0.5, 1, 1.25, 1.5, 2],
+            controlBar: {
+                children: [
+                    'playToggle',
+                    'volumePanel',
+                    'currentTimeDisplay',
+                    'timeDivider',
+                    'durationDisplay',
+                    'progressControl',
+                    'playbackRateMenuButton',
+                    'subsCapsButton',
+                    'fullscreenToggle',
+                ],
+            }
+        });
+
+        // Hata Kontrolü
+        player.on('error', function() {
+            console.log("Video yüklenirken bir hata oluştu. Linki kontrol edin.");
+        });
     </script>
 </body>
 </html>
