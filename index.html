@@ -53,7 +53,6 @@
         .search-wrapper input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
 
-        /* HERO - SMOOTH TRANSITION GÜNCELLEMESİ */
         .hero {
             position: relative; height: 85vh; width: 100%;
             display: flex; align-items: center; padding: 0 5%;
@@ -64,7 +63,7 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transition: opacity 1s ease-in-out; /* Yumuşak geçiş burası */
+            transition: opacity 1s ease-in-out;
             opacity: 1;
         }
 
@@ -90,7 +89,6 @@
 
         .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; scroll-behavior: smooth; }
         
-        /* GÖRSEL ŞÖLEN: KART PARLAMA EFEKTİ */
         .card {
             min-width: 220px; 
             max-width: 220px; 
@@ -158,9 +156,9 @@
     <section class="hero" id="heroSection">
         <div class="hero-video-bg" id="heroBg"></div>
         <div class="hero-info" id="heroInfo">
-            <div class="badge-new" id="heroBadge"><i data-lucide="zap" size="12" fill="currentColor"></i> YENİ SEZON YAKINDA</div>
-            <h1 id="heroTitleDisplay">Dexter: <br>Resurrection</h1>
-            <p id="heroDesc">Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle geçmişin hayaletleri ve yeni avlarıyla yüzleşmek için tekrar karşımızda.</p>
+            <div class="badge-new" id="heroBadge"></div>
+            <h1 id="heroTitleDisplay"></h1>
+            <p id="heroDesc"></p>
             <div class="cta-group">
                 <a href="#" id="heroLink" class="btn btn-play">
                     <i data-lucide="play" fill="white" size="20"></i> ŞİMDİ İZLE
@@ -173,21 +171,40 @@
         <section class="row-section">
             <div class="row-title reveal" id="rowTitle"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar</div>
             <div class="slider" id="movieGrid">
+                
+                <a href="recep-ivedik-1-izle.html" class="card reveal movie-item" data-title="Recep İvedik 1" data-type="film">
+                    <div class="imdb-tag">4.9</div>
+                    <img src="https://image.kanald.com.tr/i/kanald/100/1200x0/5dafff2f2678991668dbc009.jpg" alt="Recep İvedik 1">
+                    <div class="card-overlay">
+                        <div class="card-title">Recep İvedik 1</div>
+                        <div class="card-meta">2008 • Film • Komedi</div>
+                    </div>
+                </a>
+
+                <a href="recep-ivedik-2-izle.html" class="card reveal movie-item" data-title="Recep İvedik 2" data-type="film">
+                    <div class="imdb-tag">4.5</div>
+                    <img src="https://image.kanald.com.tr/i/kanald/100/0x0/5c07f0b67470f73088a99b15.jpg" alt="Recep İvedik 2">
+                    <div class="card-overlay">
+                        <div class="card-title">Recep İvedik 2</div>
+                        <div class="card-meta">2009 • Film • Komedi</div>
+                    </div>
+                </a>
+
+                <a href="recep-ivedik-3-izle.html" class="card reveal movie-item" data-title="Recep İvedik 3" data-type="film">
+                    <div class="imdb-tag">4.0</div>
+                    <img src="https://image.kanald.com.tr/i/kanald/100/0x0/5dc51d107470f71fc48457cc.jpg" alt="Recep İvedik 3">
+                    <div class="card-overlay">
+                        <div class="card-title">Recep İvedik 3</div>
+                        <div class="card-meta">2010 • Film • Komedi</div>
+                    </div>
+                </a>
+
                 <a href="a-knight-of-the-seven-kingdoms-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms" data-type="dizi">
                     <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
                     <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" alt="A Knight of the Seven Kingdoms">
                     <div class="card-overlay">
                         <div class="card-title">A Knight of the Seven Kingdoms</div>
                         <div class="card-meta">2025 • Dizi • Macera</div>
-                    </div>
-                </a>
-
-                <a href="https://vs1.photostack.net/v/Zootopia.2.2025.FHD.WebDL/master.m3u8" class="card reveal movie-item" data-title="Zootropolis 2" data-type="film">
-                    <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
-                    <img src="https://media.baovanhoa.vn/zoom/1000/Uploaded/nghiemthanh/2026_01_01/1_6_FNCH.jpg" alt="Zootropolis 2">
-                    <div class="card-overlay">
-                        <div class="card-title">Zootropolis 2</div>
-                        <div class="card-meta">2025 • Film • Animasyon</div>
                     </div>
                 </a>
 
@@ -200,30 +217,12 @@
                     </div>
                 </a>
 
-                <a href="mobland-izle.html" class="card reveal movie-item" data-title="Mobland" data-type="dizi">
-                    <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
-                    <img src="https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg" alt="Mobland">
-                    <div class="card-overlay">
-                        <div class="card-title">Mobland</div>
-                        <div class="card-meta">2025 • Dizi • Aksiyon</div>
-                    </div>
-                </a>
-
                 <a href="godfather-izle.html" class="card reveal movie-item" data-title="The Godfather" data-type="film">
                     <div class="imdb-tag" style="color: #ec5d00;">9.2</div>
                     <img src="https://communist.red/wp-content/uploads/2022/08/godfather.png" alt="The Godfather">
                     <div class="card-overlay">
                         <div class="card-title">The Godfather</div>
                         <div class="card-meta">1972 • Film • Suç</div>
-                    </div>
-                </a>
-
-                <a href="derry-izle.html" class="card reveal movie-item" data-title="IT Welcome to Derry" data-type="dizi">
-                    <div class="imdb-tag">8.4</div>
-                    <img src="https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp" alt="Derry">
-                    <div class="card-overlay">
-                        <div class="card-title">IT: Welcome to Derry</div>
-                        <div class="card-meta">2025 • Dizi • Korku</div>
                     </div>
                 </a>
             </div>
@@ -233,8 +232,14 @@
     <script>
         lucide.createIcons();
 
-        // TÜM DİZİLER VE ÖNEMLİ YAPIMLAR HERO DATA
         const heroData = [
+            {
+                title: "Recep İvedik 1",
+                desc: "Antalya'da bir otele cüzdan bırakmak için yola çıkan Recep'in efsanevi macerası.",
+                img: "https://image.kanald.com.tr/i/kanald/100/1200x0/5dafff2f2678991668dbc009.jpg",
+                badge: "EFSANE SERİ",
+                link: "recep-ivedik-1-izle.html"
+            },
             {
                 title: "Dexter: <br>Resurrection",
                 desc: "Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle tekrar karşımızda.",
@@ -243,25 +248,11 @@
                 link: "dexter-resurrection-izle.html"
             },
             {
-                title: "A Knight of the <br>Seven Kingdoms",
-                desc: "Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin unutulmaz hikayesi.",
-                img: "https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg",
-                badge: "YENİ DİZİ",
-                link: "a-knight-of-the-seven-kingdoms-izle.html"
-            },
-            {
-                title: "Mobland",
-                desc: "Gerilim dolu bir kasaba ve suç dünyasının derinliklerine yolculuk.",
-                img: "https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg",
-                badge: "YENİ BÖLÜMLER",
-                link: "mobland-izle.html"
-            },
-            {
-                title: "IT: Welcome <br>to Derry",
-                desc: "Derry'nin karanlık geçmişi ve Pennywise'ın kökenleri gün yüzüne çıkıyor.",
-                img: "https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp",
-                badge: "KORKU SEVERLER İÇİN",
-                link: "derry-izle.html"
+                title: "Recep İvedik 2",
+                desc: "Babaannesinin isteklerini yerine getirmek için iş dünyasına dalan Recep.",
+                img: "https://image.kanald.com.tr/i/kanald/100/0x0/5c07f0b67470f73088a99b15.jpg",
+                badge: "GÜLME GARANTİLİ",
+                link: "recep-ivedik-2-izle.html"
             }
         ];
 
@@ -271,19 +262,16 @@
             const info = document.getElementById('heroInfo');
             const data = heroData[currentHero];
 
-            // Önce görünmez yap (Smooth geçişin sırrı)
             info.classList.add('fade-out');
             bg.style.opacity = '0';
 
             setTimeout(() => {
-                // Verileri değiştir
                 bg.style.backgroundImage = `linear-gradient(to right, var(--bg) 20%, transparent 70%), linear-gradient(to top, var(--bg) 10%, transparent 40%), url('${data.img}')`;
                 document.getElementById('heroTitleDisplay').innerHTML = data.title;
                 document.getElementById('heroDesc').innerText = data.desc;
                 document.getElementById('heroBadge').innerHTML = `<i data-lucide="zap" size="12" fill="currentColor"></i> ${data.badge}`;
                 document.getElementById('heroLink').href = data.link;
 
-                // Tekrar görünür yap
                 bg.style.opacity = '1';
                 info.classList.remove('fade-out');
                 lucide.createIcons();
