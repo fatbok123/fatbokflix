@@ -50,16 +50,17 @@
         }
         .ep-card:hover { border-color: var(--accent); background: rgba(236, 93, 0, 0.05); }
         .ep-card.active { border-color: var(--accent); background: var(--accent); color: white; }
+        .ep-card.active .ep-num { color: white; opacity: 0.8; }
         
         .ep-num { font-weight: 800; font-size: 0.8rem; color: var(--accent); }
-        .ep-card.active .ep-num { color: white; opacity: 0.8; }
         .ep-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         .video-js { width: 100%; }
         .vjs-big-play-button { background-color: var(--accent) !important; border: none !important; border-radius: 50% !important; }
         
-        /* Altyazı Stilini İyileştir */
-        .video-js .vjs-text-track-display { font-size: 1.2em; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+        /* Altyazı görünürlük ayarı */
+        .video-js .vjs-text-track-display { font-size: 1.3em; pointer-events: none; }
+        .vjs-text-track-cue { background-color: rgba(0, 0, 0, 0.6) !important; }
 
         .back-nav {
             position: absolute; top: 25px; left: 5%; color: white; text-decoration: none;
@@ -75,7 +76,7 @@
     <div class="player-section">
         <div class="player-wrapper">
             <video id="main-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" crossorigin="anonymous">
-                <source src="https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8" type="application/x-mpegURL">
+                <source id="video-source" src="https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8" type="application/x-mpegURL">
             </video>
         </div>
         
@@ -94,22 +95,86 @@
     <script>
         lucide.createIcons();
 
+        // TÜM ALTYAZI METNİ (Gömülü)
         const altyaziMetni = `WEBVTT
 
+00:00.560 --> 00:06.310
+<b></b>
+
 00:25.520 --> 00:29.680
-O gün insanoğlu hatırlamıştı...
+<b>O gün insanoğlu hatırlamıştı...</b>
 
 00:35.180 --> 00:38.260
-...devlerin boyunduruğu altında duydukları korku ve...
+<b>...devlerin boyunduruğu altında duydukları korku ve...</b>
 
 00:40.610 --> 00:45.580
-...kafesteki kuşlar gibi yaşamanın verdiği aşağılanmayı.
+<b>...kafesteki kuşlar gibi yaşamanın verdiği aşağılanmayı.</b>
 
 01:03.850 --> 01:05.880
-Herkes çatışmaya hazır olsun!
+<b>Herkes çatışmaya hazır olsun!</b>
 
 01:06.170 --> 01:07.810
-Bir tane hedef var!`;
+<b>Bir tane hedef var!</b>
+
+01:07.810 --> 01:12.080
+<b>Hedefi imha edip burayı surların dışındaki insanlığın ilk üssü yapacağız.</b>
+
+01:13.200 --> 01:14.380
+<b>Hedef yaklaşıyor!</b>
+
+01:19.690 --> 01:21.720
+<b>Beşe ayrılın ve talimlerinizi hatırlayın!</b>
+
+01:22.670 --> 01:24.770
+<b>Biz hedefin dikkatini dağıtacağız!</b>
+
+01:24.960 --> 01:27.800
+<b>Tüm taarruz timleri, yukarı çıkmaya hazırlanın!</b>
+
+01:49.370 --> 01:51.670
+<b>Biz yanlardan etrafını kuşatacağız!</b>
+
+01:57.140 --> 02:01.010
+<b>İnsanoğlunun kuvvetinin tadına bak bakalım!</b>
+
+02:18.260 --> 02:23.460
+Hiç kimse üstüne basılmış çiçeklerin ismini hatırlamaz
+
+02:23.400 --> 02:28.800
+Düşen kuşlar tekrar denemeden önce bir sonraki rüzgarı beklerler
+
+02:28.700 --> 02:34.080
+Dualar bizi kurtarmaz
+
+02:34.000 --> 02:39.560
+Bu dünyayı yalnızca savaşma arzusu değiştirebilir
+
+02:39.260 --> 02:41.840
+Sana gülen domuzları görmezden gelip...
+
+02:41.560 --> 02:44.640
+...ilerlemek için irade gücünü kullan
+
+02:44.440 --> 02:47.360
+Artık barış sarhoşu hayvanlar gibi yaşamak yok
+
+02:47.100 --> 02:50.080
+Bizler özgür aç kurtlarız!
+
+02:49.920 --> 02:55.480
+Esaretin aşağılanması intikamın çağrısı olacak
+
+02:55.200 --> 03:00.700
+Esir düşüp düşmemek fark etmez, avını öldüreceksin!
+
+03:00.600 --> 03:06.140
+İçine dolup taşan bu arzunun bedenini kavurduğu gibi...
+
+03:05.860 --> 03:12.760
+...çabucak bir yay al ve fırlat o yanan oku
+
+03:35.000 --> 03:39.990
+1. Bölüm - Shiganshina'nın Düşüşü`;
 
         const blob = new Blob([altyaziMetni], { type: 'text/vtt' });
         const vttURL = URL.createObjectURL(blob);
@@ -125,47 +190,43 @@ Bir tane hedef var!`;
             {
                 id: 2,
                 title: "O Gün",
-                desc: "2. Bölüm. Kaçış başlar.",
-                m3u8: "",
+                desc: "Shiganshina'nın Düşüşü, 2. Bölüm. Kaçış başlar.",
+                m3u8: "", 
                 vtt: "" 
             }
         ];
 
-        const player = videojs('main-player', {
-            html5: { vhs: { overrideNative: true }, nativeAudioTracks: false, nativeVideoTracks: false }
-        });
-
+        const player = videojs('main-player');
         const epListContainer = document.getElementById('epList');
 
         function loadEpisode(index) {
             const ep = episodes[index];
-            if (!ep.m3u8) return;
+            if(!ep.m3u8) return;
 
             document.getElementById('current-title').innerText = `Bölüm ${ep.id}: ${ep.title}`;
             document.getElementById('current-desc').innerText = ep.desc;
             
             player.src({ type: 'application/x-mpegURL', src: ep.m3u8 });
             
-            // Player hazır olduğunda altyazıyı ekle
             player.ready(function() {
-                // Eski trackleri temizle
-                const tracks = player.remoteTextTracks();
-                for (let i = 0; i < tracks.length; i++) {
-                    player.removeRemoteTextTrack(tracks[i]);
+                // Mevcut altyazıları temizle
+                const oldTracks = player.remoteTextTracks();
+                for (let i = 0; i < oldTracks.length; i++) {
+                    player.removeRemoteTextTrack(oldTracks[i]);
                 }
 
                 if(ep.vtt) {
-                    const newTrack = player.addRemoteTextTrack({
+                    const track = player.addRemoteTextTrack({
                         kind: 'subtitles',
                         src: ep.vtt,
                         srclang: 'tr',
                         label: 'Türkçe',
                         default: true
                     }, false);
-                    
-                    // Altyazıyı görünür yapmaya zorla
-                    newTrack.addEventListener('load', function() {
-                        newTrack.mode = 'showing';
+
+                    // Altyazıyı zorla aktifleştir
+                    track.on('load', function() {
+                        this.mode = 'showing';
                     });
                 }
             });
@@ -173,6 +234,8 @@ Bir tane hedef var!`;
             document.querySelectorAll('.ep-card').forEach((card, i) => {
                 card.classList.toggle('active', i === index);
             });
+            
+            player.play();
         }
 
         episodes.forEach((ep, index) => {
@@ -186,7 +249,6 @@ Bir tane hedef var!`;
             epListContainer.appendChild(card);
         });
 
-        // Sayfa yüklendiğinde ilk bölümü yükle
         loadEpisode(0);
     </script>
 </body>
