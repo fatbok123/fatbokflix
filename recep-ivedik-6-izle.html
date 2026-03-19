@@ -4,35 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recep İvedik 6 İzle | FATBOKFLIX</title>
+    
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
     <style>
-        :root { --bg: #020202; --accent: #ec5d00; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .player-container { width: 90%; max-width: 1000px; margin-top: 80px; position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 0 50px rgba(236, 93, 0, 0.2); border: 1px solid rgba(255,255,255,0.1); }
-        video { width: 100%; display: block; background: #000; }
+        :root { 
+            --plyr-color-main: #ec5d00; /* FATBOK Turuncusu */
+            --bg: #020202; 
+            --text: #ffffff; 
+        }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+
+        /* Player Konteynırı */
+        .player-container { 
+            width: 90%; 
+            max-width: 1000px; 
+            margin-top: 80px; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 0 50px rgba(236, 93, 0, 0.15); 
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
         .info-panel { width: 90%; max-width: 1000px; margin-top: 30px; padding: 20px; }
-        .info-panel h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
-        .info-panel p { color: #94a3b8; line-height: 1.6; }
-        .back-btn { position: absolute; top: 20px; left: 5%; color: white; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: 0.3s; z-index: 100; }
-        .back-btn:hover { color: var(--accent); }
+        .info-panel h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; color: var(--plyr-color-main); }
+        .info-panel p { color: #94a3b8; line-height: 1.6; font-size: 1.1rem; }
+
+        .back-btn { 
+            position: absolute; 
+            top: 20px; 
+            left: 5%; 
+            color: white; 
+            text-decoration: none; 
+            font-weight: 600; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: 0.3s; 
+            z-index: 100;
+            opacity: 0.7;
+        }
+        .back-btn:hover { color: var(--plyr-color-main); opacity: 1; }
+
+        /* Plyr İnce Ayarlar */
+        .plyr--full-ui input[type=range] { color: var(--plyr-color-main); }
+        .plyr__control--overlaid { background: rgba(236, 93, 0, 0.85); }
     </style>
 </head>
 <body>
+
     <a href="index.html" class="back-btn">← Geri Dön</a>
+
     <div class="player-container">
-        <video id="video" controls crossorigin playsinline poster="https://i.ytimg.com/vi/BPXtVB2Qp-4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLALipjn43Rpjk2ykd3L5pJN0V5F-g"></video>
+        <video id="player" playsinline controls crossorigin="anonymous" poster="https://i.ytimg.com/vi/BPXtVB2Qp-4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLALipjn43Rpjk2ykd3L5pJN0V5F-g">
+            </video>
     </div>
+
     <div class="info-panel">
         <h1>Recep İvedik 6</h1>
-        <p>Konya diye yanlışlıkla Kenya'ya giden Recep ve Nurullah, Afrika'nın vahşi doğasında kendilerini kabile savaşlarının içinde bulurlar.</p>
+        <p>Konya yerine yanlışlıkla Kenya'ya giden Recep ve Nurullah'ın Afrika macerası! Vahşi doğada kabile reisi olmaya çalışan Recep'in kahkaha dolu serüveni şimdi modern player kalitesinde.</p>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+
     <script>
-        var video = document.getElementById('video');
-        var videoSrc = 'https://vs16.gamephotos.pro/v/Recep.Ivedik.6.2019.WEB-DL.1080p.H.264-iTunes/master.m3u8';
-        if (Hls.isSupported()) {
-            var hls = new Hls(); hls.loadSource(videoSrc); hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) { video.src = videoSrc; }
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('#player');
+            const source = 'https://vs16.gamephotos.pro/v/Recep.Ivedik.6.2019.WEB-DL.1080p.H.264-iTunes/master.m3u8';
+            
+            const defaultOptions = {
+                controls: [
+                    'play-large', 'play', 'progress', 'current-time', 
+                    'mute', 'volume', 'settings', 'pip', 'fullscreen'
+                ],
+                speed: { selected: 1, options: [0.5, 1, 1.25, 1.5, 2] },
+                tooltips: { controls: true, seek: true }
+            };
+
+            if (!Hls.isSupported()) {
+                video.src = source;
+                new Plyr(video, defaultOptions);
+            } else {
+                const hls = new Hls({
+                    maxBufferSize: 0,
+                    maxBufferLength: 30,
+                    enableWorker: true
+                });
+                hls.loadSource(source);
+                hls.attachMedia(video);
+                window.hls = hls;
+
+                new Plyr(video, defaultOptions);
+            }
+        });
     </script>
 </body>
 </html>
