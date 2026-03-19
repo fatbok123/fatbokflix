@@ -3,70 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recep İvedik 1 | FATBOK TV</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <title>Recep İvedik 1 | FATBOKFLIX</title>
+    
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { background: #050505; color: white; font-family: 'Plus Jakarta Sans', sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; }
-        .video-wrapper { width: 100%; max-width: 900px; background: #000; border-radius: 15px; overflow: hidden; box-shadow: 0 0 40px rgba(236, 93, 0, 0.3); border: 1px solid #333; }
-        video { width: 100%; aspect-ratio: 16/9; outline: none; }
-        .info { margin-top: 20px; text-align: center; }
-        h1 { color: #ec5d00; margin-bottom: 5px; }
-        p { opacity: 0.6; }
+        :root { 
+            --plyr-color-main: #ec5d00; /* Senin turuncu rengin */
+            --bg: #020202;
+        }
+        
+        body { 
+            background: var(--bg); 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            padding: 40px 20px;
+        }
+
+        .video-container { 
+            width: 100%; 
+            max-width: 1000px; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .movie-info {
+            width: 100%;
+            max-width: 960px;
+            margin-top: 30px;
+        }
+
+        .movie-info h1 { 
+            font-size: 2.5rem; 
+            font-weight: 800; 
+            margin: 0; 
+            color: var(--plyr-color-main);
+        }
+
+        /* Plyr Özelleştirme */
+        .plyr--full-ui input[type=range] { color: var(--plyr-color-main); }
+        .plyr__control--overlaid { background: rgba(236, 93, 0, 0.8); }
+        .plyr__video-embed iframe, .plyr__video-wrapper video { aspect-ratio: 16/9; }
     </style>
 </head>
 <body>
 
-    <div class="video-wrapper">
-        <video id="video" controls autoplay playsinline crossorigin="anonymous"></video>
+    <div class="video-container">
+        <video id="player" playsinline controls crossorigin="anonymous" poster="https://image.kanald.com.tr/i/kanald/100/1200x0/5dafff2f2678991668dbc009.jpg">
+            </video>
     </div>
 
-    <div class="info">
+    <div class="movie-info">
         <h1>Recep İvedik 1</h1>
-        <p>Eğer video hala açılmıyorsa link patlamış olabilir.</p>
+        <p style="opacity: 0.6; line-height: 1.6;">Modern Player deneyimi ile FATBOKFLIX sunar. İyi seyirler dileriz.</p>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
     <script>
-        var video = document.getElementById('video');
-        // Yeni bir link deniyoruz (Eski link patlamış olabilir)
-        var videoSrc = 'https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8';
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('#player');
+            const source = 'https://vs16.photofunia.pro/v/Recep.Ivedik.2008.WEB-DL.1080p.H.264-iTunes/master.m3u8';
+            
+            // Modern Player Ayarları
+            const controls = [
+                'play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 
+                'captions', 'settings', 'pip', 'airplay', 'fullscreen'
+            ];
 
-        if (Hls.isSupported()) {
-            var hls = new Hls({
-                debug: false,
-                enableWorker: true,
-                lowLatencyMode: true,
-            });
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                video.play().catch(() => {
-                    console.log("Otomatik oynatma engellendi, kullanıcı etkileşimi bekleniyor.");
+            if (!Hls.isSupported()) {
+                video.src = source;
+                const player = new Plyr(video, { controls });
+            } else {
+                const hls = new Hls();
+                hls.loadSource(source);
+                hls.attachMedia(video);
+                window.hls = hls;
+
+                const player = new Plyr(video, { 
+                    controls,
+                    tooltips: { controls: true, seek: true },
+                    speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
                 });
-            });
-
-            // Hata Yakalayıcı
-            hls.on(Hls.Events.ERROR, function (event, data) {
-                if (data.fatal) {
-                    switch (data.type) {
-                        case Hls.ErrorTypes.NETWORK_ERROR:
-                            console.error("Ağ hatası: Linke ulaşılamıyor.");
-                            hls.startLoad();
-                            break;
-                        case Hls.ErrorTypes.MEDIA_ERROR:
-                            console.error("Medya hatası: Video çözülemiyor.");
-                            hls.recoverMediaError();
-                            break;
-                        default:
-                            hls.destroy();
-                            break;
-                    }
-                }
-            });
-        }
-        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = videoSrc;
-        }
+            }
+        });
     </script>
 </body>
 </html>
