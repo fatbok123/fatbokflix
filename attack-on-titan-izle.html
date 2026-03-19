@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attack on Titan İzle | Bölüm 1 | FATBOKFLIX</title>
+    <title>Attack on Titan İzle | Tüm Bölümler | FATBOKFLIX</title>
     
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -32,10 +32,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000;
         }
 
-        /* VideoJS Altyazı Tasarımı */
-        .video-js .vjs-text-track-display { font-size: 1.4em; bottom: 3.5em; }
-        .vjs-text-track-cue { background-color: rgba(0, 0, 0, 0.7) !important; color: #fff !important; padding: 4px 10px !important; border-radius: 4px; }
-
         .playlist-section {
             width: 100%; max-width: 1100px; margin: 40px 0; padding: 0 20px;
         }
@@ -52,16 +48,25 @@
             padding: 15px; border-radius: 12px; cursor: pointer;
             transition: 0.3s; display: flex; align-items: center; gap: 12px;
         }
+        .ep-card:hover { border-color: var(--accent); background: rgba(236, 93, 0, 0.05); }
         .ep-card.active { border-color: var(--accent); background: var(--accent); color: white; }
-        .ep-num { font-weight: 800; }
+        .ep-card.active .ep-num { color: white; opacity: 0.8; }
         
+        .ep-num { font-weight: 800; font-size: 0.8rem; color: var(--accent); }
+        .ep-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
         .video-js { width: 100%; }
         .vjs-big-play-button { background-color: var(--accent) !important; border: none !important; border-radius: 50% !important; }
+        
+        /* Altyazı görünürlük ayarı */
+        .video-js .vjs-text-track-display { font-size: 1.3em; pointer-events: none; }
+        .vjs-text-track-cue { background-color: rgba(0, 0, 0, 0.7) !important; padding: 4px 8px !important; border-radius: 4px; }
 
         .back-nav {
             position: absolute; top: 25px; left: 5%; color: white; text-decoration: none;
-            font-weight: 600; display: flex; align-items: center; gap: 8px; opacity: 0.7;
+            font-weight: 600; display: flex; align-items: center; gap: 8px; opacity: 0.7; transition: 0.3s;
         }
+        .back-nav:hover { opacity: 1; color: var(--accent); }
     </style>
 </head>
 <body>
@@ -71,21 +76,26 @@
     <div class="player-section">
         <div class="player-wrapper">
             <video id="main-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" crossorigin="anonymous">
-                <source src="https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8" type="application/x-mpegURL">
+                <source id="video-source" src="https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8" type="application/x-mpegURL">
             </video>
         </div>
         
         <div style="margin-top: 25px;">
-            <h1 id="current-title" style="font-size: 1.8rem; font-weight: 800;">Bölüm 1: 2000 Yıl Sonraki Sana</h1>
-            <p style="color: #94a3b8; margin-top: 10px;">Shiganshina'nın Düşüşü, 1. Bölüm.</p>
+            <h1 id="current-title" style="font-size: 1.8rem; font-weight: 800;">Yükleniyor...</h1>
+            <p id="current-desc" style="color: #94a3b8; margin-top: 10px;"></p>
         </div>
+    </div>
+
+    <div class="playlist-section">
+        <div class="season-title"><i data-lucide="layers"></i> 1. Sezon</div>
+        <div class="episodes-grid" id="epList"></div>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
         lucide.createIcons();
 
-        // GÖNDERDİĞİN TÜM METİN BURADA (Eksiksiz)
+        // TÜM ALTYAZI METNİ (Gömülü)
         const altyaziMetni = `WEBVTT
 
 00:00.560 --> 00:06.310
@@ -177,6 +187,7 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 
 03:35.000 --> 03:39.990
 1. Bölüm - Günümüzden 2000 Yıl Sonra
+Shiganshina'nın Düşüşü (1. Kısım)
 
 04:06.850 --> 04:08.880
 <b>Sen misin Mikasa?</b>
@@ -217,14 +228,8 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 05:02.980 --> 05:07.390
 <b>Ağladığımı hiç kimseye söyleme!</b>
 
-05:07.390 --> 05:08.100
-<b>Söylemem.</b>
-
 05:09.270 --> 05:15.080
 <b>Ama neden ağladığını bilmiyorsan bunu babanla konuşman iyi olmaz mı?</b>
-
-05:15.080 --> 05:16.700
-<b>Aptallaşma!</b>
 
 05:16.700 --> 05:18.810
 <b>Babama bunu nasıl söyleyebilirim.</b>
@@ -238,12 +243,6 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 05:24.650 --> 05:26.760
 <b>Mikasa mı kızdı yoksa?</b>
 
-05:27.120 --> 05:27.960
-<b>Ne?</b>
-
-05:27.960 --> 05:30.190
-<b>Ne diye ben ağlayacakmışım ki?</b>
-
 05:30.190 --> 05:31.550
 <b>Leş gibi içki kokuyorsun!</b>
 
@@ -252,9 +251,6 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 
 05:35.650 --> 05:37.340
 <b>Yine mi içiyorsunuz?</b>
-
-05:37.340 --> 05:39.210
-<b>Sen de bize katılmak ister misin?</b>
 
 05:39.210 --> 05:41.930
 <b>Şey ama göreviniz yok mu?</b>
@@ -274,26 +270,14 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 05:59.630 --> 06:02.330
 <b>Ne? Ne zaman savaşmamız gerekecek ki?</b>
 
-06:02.330 --> 06:03.300
-<b>Bir de soruyor musun?</b>
-
 06:03.850 --> 06:06.760
 <b>Elbette o şeyler surları delip içeri girdikleri zaman!</b>
-
-06:10.300 --> 06:11.970
-<b>Bak bu can yakıcıydı.</b>
 
 06:11.970 --> 06:15.540
 <b>Eren, böyle şeyler yüksek sesle söylenmez.</b>
 
-06:16.600 --> 06:19.020
-<b>Epey de tez canlı değil mi doktorun ufaklığı?</b>
-
 06:19.580 --> 06:23.890
 <b>Surları yıkacak olurlarsa biz de üzerimize düşeni yaparız.</b>
-
-06:23.890 --> 06:25.040
-<b>Yine de...</b>
 
 06:25.250 --> 06:28.290
 <b>...bu surlar 100 yıldan beridir hiç yıkılmadı.</b>
@@ -301,26 +285,14 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 06:28.290 --> 06:33.830
 <b>Ama babam en büyük tehlikenin insanların böyle rehavete kapılması olduğunu söylemişti!</b>
 
-06:33.830 --> 06:35.920
-<b>Doktor öyle mi dedi?</b>
-
-06:35.920 --> 06:37.320
-<b>Gerçi haksız da değil.</b>
-
 06:37.600 --> 06:41.670
 <b>Doktor daha önce şehrimizi vebadan kurtarmıştı.</b>
-
-06:42.360 --> 06:44.880
-<b>Ne yapsak ona borcumuzu ödeyemeyiz.</b>
 
 06:44.880 --> 06:47.920
 <b>Yine de devler tamamen farklı bir konu.</b>
 
-06:49.220 --> 06:55.350
-<b>Surları tamir ederken hep etrafta dolaşan devleri görüyorum.</b>
-
 06:55.830 --> 07:00.960
-<b>Ama bir asker olarak konuşursam 50 metrelik surlara bir şey yapabileceklerini sanmıyorum.</b>
+<b>Asker olarak konuşursam 50 metrelik surlara bir şey yapabileceklerini sanmıyorum.</b>
 
 07:00.960 --> 07:06.030
 <b>O zaman en başından beri onlarla savaşmak için hazırlıklı değil misiniz?</b>
@@ -328,56 +300,20 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 07:06.030 --> 07:07.120
 <b>Sanırım değiliz.</b>
 
-07:08.130 --> 07:09.550
-<b>Bu da ne demek?</b>
-
-07:09.550 --> 07:11.950
-<b>Öyleyse kendinize Şehir Muhafızları demeyi bırakıp...</b>
-
 07:11.950 --> 07:14.080
-<b>...adınızı Sur Tamircileri olarak değiştirin.</b>
-
-07:14.080 --> 07:15.700
-<b>Bak bu kulağa fena gelmiyor.</b>
+<b>Öyleyse adınızı Sur Tamircileri olarak değiştirin.</b>
 
 07:17.200 --> 07:22.710
 <b>Yine de Eren, askerlerin savaşma vakti geldiğinde felaket kapıya dayanmış demektir.</b>
 
 07:23.130 --> 07:27.750
-<b>Hiçbir şey yapmadan "işe yaramaz beleşçiler" olarak anıldığımızda...</b>
-
-07:27.750 --> 07:29.880
-<b>...insanlar daha mutludur demektir.</b>
+<b>"İşe yaramaz beleşçiler" olarak anıldığımızda insanlar daha mutludur demektir.</b>
 
 07:32.810 --> 07:39.640
-<b>Evet, biliyorum. Dışarı çıkamasak da yemek yiyip uyduğumuz müddetçe yaşayacağız.</b>
-
-07:40.030 --> 07:42.490
-<b>Ama böyle yaşayarak...</b>
+<b>Yemek yiyip uyduğumuz müddetçe yaşayacağız. Ama böyle yaşayarak...</b>
 
 07:43.960 --> 07:46.190
 <b>...çiftlik hayvanlarından ne farkımız kalır ki?</b>
-
-07:49.330 --> 07:51.740
-<b>Veledin ağzı iyi laf yapıyor.</b>
-
-07:51.740 --> 07:55.040
-<b>Sanki kendi elinden bir şey gelirmiş gibi, değil mi Hannes?</b>
-
-07:55.900 --> 07:57.040
-<b>Evet.</b>
-
-08:01.860 --> 08:03.540
-<b>Ne tuhaf çocuk ama!</b>
-
-08:04.410 --> 08:08.620
-<b>Yoksa Keşif Birliğine katılmayı mı istiyor?</b>
-
-08:17.800 --> 08:20.810
-<b>Eren, Keşif Birliğine katılmaktan vazgeçmen en iyisi.</b>
-
-08:21.910 --> 08:25.500
-<b>Ne? Sen de mi onlarla dalga geçmeye başlayacaksın?</b>
 
 08:34.880 --> 08:37.240
 <b>Keşif Birliği geri döndü!</b>
@@ -388,11 +324,8 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 09:25.310 --> 09:28.370
 <b>Geriye bu kadar azının geleceğini kim düşünebilirdi.</b>
 
-09:30.970 --> 09:34.480
-<b>Surların dışına çıkarsan başına gelecek olan budur işte.</b>
-
 09:37.650 --> 09:41.420
-<b>Şey, oğlum Moses'i göremiyorum. Oğlum nerede?</b>
+<b>Oğlum Moses'i göremiyorum. Oğlum nerede?</b>
 
 10:14.130 --> 10:17.370
 <b>Oğlunuzun kurtarabildiğimiz tek parçası bu.</b>
@@ -400,14 +333,8 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 10:33.900 --> 10:37.900
 <b>Ama oğlum bir işe yaradı, değil mi?</b>
 
-10:43.240 --> 10:48.540
-<b>En azından oğlumun ölümü insanlığın direnişi için faydalı oldu, değil mi?</b>
-
-11:10.920 --> 11:14.680
-<b>...hâlâ herhangi bir ilerleme kaydedemedik!</b>
-
-11:18.110 --> 11:21.050
-<b>Yetersizliğim yüzünden bir sürü askeri ölüme sürükledim!</b>
+11:02.340 --> 11:05.880
+<b>Bu görev sırasında biz... hâlâ herhangi bir ilerleme kaydedemedik!</b>
 
 11:21.050 --> 11:27.300
 <b>Devlerin kökeni ya da amaçlarına dair faydalı hiçbir şey öğrenemedik!</b>
@@ -418,17 +345,26 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 11:51.690 --> 11:53.980
 <b>Ne yapıyorsun Mikasa?</b>
 
-12:08.330 --> 12:13.210
-<b>Surlarla ilgili olarak: İnsanoğlu üç katmandan oluşan surların ardında yaşamaktadır.</b>
+12:03.850 --> 12:05.270
+<b>Bunu niye yaptın şimdi?</b>
 
-13:11.890 --> 13:12.830
-<b>İş için mi?</b>
+12:28.990 --> 12:34.000
+<b>An İtibarı İle İfşa Edilebilir Bilgiler</b>
+İnsanoğlu üç katmandan oluşan surların ardında yaşamaktadır.
+Sur Maria, Sur Rose ve Sur Sina.
+
+12:34.000 --> 12:39.000
+<b>An İtibarı İle İfşa Edilebilir Bilgiler</b>
+Maria ve Rose arası 100 km, Rose ve Sina arası 130 km.
+
+13:12.830 --> 13:15.540
+<b>İç surlarda birini görmem gerekiyor. İki üç güne dönerim.</b>
 
 13:20.600 --> 13:23.550
 <b>Eren Keşif Birliğine katılmak istiyor.</b>
 
-13:42.670 --> 13:45.320
-<b>Neden dışarı çıkmak istiyorsun?</b>
+13:39.010 --> 13:40.020
+<b>Biliyorum tabii!</b>
 
 13:51.230 --> 13:54.900
 <b>Hiçbir şey bilmeden surların ardında ölmek istemiyorum!</b>
@@ -436,22 +372,19 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 14:25.800 --> 14:30.780
 <b>Döndüğüm zaman sana hep kapalı tuttuğum bodrum katını göstereceğim.</b>
 
-14:52.930 --> 14:53.600
-<b>Eren!</b>
-
-15:10.810 --> 15:13.760
-<b>Hatalı olduğumu göstermek istiyorsan neden bana vurmuyorsun?</b>
-
-15:20.310 --> 15:26.250
-<b>Bana vurmanın nedeni, haklı olduğumu bilmen ve aksini ispatlayamıyor olman değil mi?</b>
+14:47.620 --> 14:52.930
+<b>Asıl aptal olanlar çiftlik hayvanları gibi içeri tıkılıp yaşamak isteyenler!</b>
 
 15:47.730 --> 15:49.950
 <b>Eyvah. Kaçın lan! Mikasa da yanında!</b>
 
-16:29.560 --> 16:35.140
-<b>Bunun nedeni 100 yıldır bu surların ardında huzurlu bir yaşam sürüyor olmamız.</b>
+16:11.050 --> 16:12.150
+<b>Kendim ayağa kalkabilirim.</b>
 
-17:19.410 --> 17:19.410
+16:29.560 --> 16:35.140
+<b>Bunun nedeni 100 yıldır huzurlu bir yaşam sürüyor olmamız.</b>
+
+17:19.410 --> 17:32.510
 <b>100 yıldır yıkılmamış olsalar da bir gün yıkılmayacaklarının garantisi yok.</b>
 
 18:33.830 --> 18:35.150
@@ -476,26 +409,80 @@ Esir düşüp düşmemek fark etmez, avını öldüreceksin!
 <b>O gün insanoğlu acı bir şekilde hatırlamıştı...</b>
 
 25:34.710 --> 25:39.400
-<b>Ancak Eren, o minicik kalbiyle intikam almaya yemin etti.</b>`;
+<b>Ancak Eren, o minicik kalbiyle intikam almaya yemin etti.`;
 
         const blob = new Blob([altyaziMetni], { type: 'text/vtt' });
         const vttURL = URL.createObjectURL(blob);
 
+        const episodes = [
+            {
+                id: 1,
+                title: "2000 Yıl Sonraki Sana",
+                desc: "Shiganshina'nın Düşüşü, 1. Bölüm. İnsanlığın hatıralarındaki o karanlık gün.",
+                m3u8: "https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8",
+                vtt: vttURL
+            },
+            {
+                id: 2,
+                title: "O Gün",
+                desc: "Shiganshina'nın Düşüşü, 2. Bölüm. Kaçış başlar.",
+                m3u8: "", 
+                vtt: "" 
+            }
+        ];
+
         const player = videojs('main-player');
+        const epListContainer = document.getElementById('epList');
 
-        player.ready(function() {
-            const track = player.addRemoteTextTrack({
-                kind: 'subtitles',
-                src: vttURL,
-                srclang: 'tr',
-                label: 'Türkçe',
-                default: true
-            }, false);
+        function loadEpisode(index) {
+            const ep = episodes[index];
+            if(!ep.m3u8) return;
 
-            track.on('load', function() {
-                this.mode = 'showing';
+            document.getElementById('current-title').innerText = `Bölüm ${ep.id}: ${ep.title}`;
+            document.getElementById('current-desc').innerText = ep.desc;
+            
+            player.src({ type: 'application/x-mpegURL', src: ep.m3u8 });
+            
+            player.ready(function() {
+                const oldTracks = player.remoteTextTracks();
+                for (let i = 0; i < oldTracks.length; i++) {
+                    player.removeRemoteTextTrack(oldTracks[i]);
+                }
+
+                if(ep.vtt) {
+                    const track = player.addRemoteTextTrack({
+                        kind: 'subtitles',
+                        src: ep.vtt,
+                        srclang: 'tr',
+                        label: 'Türkçe',
+                        default: true
+                    }, false);
+
+                    track.on('load', function() {
+                        this.mode = 'showing';
+                    });
+                }
             });
+
+            document.querySelectorAll('.ep-card').forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+            
+            player.play();
+        }
+
+        episodes.forEach((ep, index) => {
+            const card = document.createElement('div');
+            card.className = `ep-card ${index === 0 ? 'active' : ''}`;
+            card.innerHTML = `
+                <div class="ep-num">${ep.id < 10 ? '0'+ep.id : ep.id}</div>
+                <div class="ep-name">${ep.title}</div>
+            `;
+            card.onclick = () => loadEpisode(index);
+            epListContainer.appendChild(card);
         });
+
+        loadEpisode(0);
     </script>
 </body>
 </html>
