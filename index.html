@@ -53,7 +53,7 @@
         .search-wrapper input:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-dim); }
 
-        /* HERO GÜNCELLEMESİ */
+        /* HERO - SMOOTH TRANSITION GÜNCELLEMESİ */
         .hero {
             position: relative; height: 85vh; width: 100%;
             display: flex; align-items: center; padding: 0 5%;
@@ -64,10 +64,13 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transition: background-image 1.2s ease-in-out;
+            transition: opacity 1s ease-in-out; /* Yumuşak geçiş burası */
+            opacity: 1;
         }
 
-        .hero-info { max-width: 650px; }
+        .hero-info { max-width: 650px; transition: opacity 0.8s ease, transform 0.8s ease; }
+        .hero-info.fade-out { opacity: 0; transform: translateY(10px); }
+
         .badge-new { 
             background: rgba(var(--accent-rgb), 0.1); color: var(--accent);
             padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 0.7rem;
@@ -154,7 +157,7 @@
 
     <section class="hero" id="heroSection">
         <div class="hero-video-bg" id="heroBg"></div>
-        <div class="hero-info reveal">
+        <div class="hero-info" id="heroInfo">
             <div class="badge-new" id="heroBadge"><i data-lucide="zap" size="12" fill="currentColor"></i> YENİ SEZON YAKINDA</div>
             <h1 id="heroTitleDisplay">Dexter: <br>Resurrection</h1>
             <p id="heroDesc">Efsane geri dönüyor. Michael C. Hall, ikonik seri katil rolüyle geçmişin hayaletleri ve yeni avlarıyla yüzleşmek için tekrar karşımızda.</p>
@@ -170,7 +173,6 @@
         <section class="row-section">
             <div class="row-title reveal" id="rowTitle"><i data-lucide="trending-up" color="#ec5d00"></i> Gündemdeki Yapımlar</div>
             <div class="slider" id="movieGrid">
-                
                 <a href="a-knight-of-the-seven-kingdoms-izle.html" class="card reveal movie-item" data-title="A Knight of the Seven Kingdoms" data-type="dizi">
                     <div class="imdb-tag" style="background: var(--accent); color: white; border:none;">YENİ</div>
                     <img src="https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg" alt="A Knight of the Seven Kingdoms">
@@ -224,7 +226,6 @@
                         <div class="card-meta">2025 • Dizi • Korku</div>
                     </div>
                 </a>
-
             </div>
         </section>
     </div>
@@ -232,7 +233,7 @@
     <script>
         lucide.createIcons();
 
-        // DINAMIK HERO DATA
+        // TÜM DİZİLER VE ÖNEMLİ YAPIMLAR HERO DATA
         const heroData = [
             {
                 title: "Dexter: <br>Resurrection",
@@ -242,37 +243,52 @@
                 link: "dexter-resurrection-izle.html"
             },
             {
-                title: "Zootropolis 2",
-                desc: "Nick ve Judy, şehri alt üst edecek yepyeni bir gizemi çözmek için geri dönüyor.",
-                img: "https://media.baovanhoa.vn/zoom/1000/Uploaded/nghiemthanh/2026_01_01/1_6_FNCH.jpg",
-                badge: "SİNEMALARDA",
-                link: "zootropolis-2-izle.html"
-            },
-            {
                 title: "A Knight of the <br>Seven Kingdoms",
-                desc: "Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin hikayesi.",
+                desc: "Westeros topraklarında efsanevi bir şövalye ve sadık yaverinin unutulmaz hikayesi.",
                 img: "https://www.hdfilmizle.life/v/504220/poster/thumb-lg/a-knight-of-the-seven-kingdoms.jpg",
                 badge: "YENİ DİZİ",
                 link: "a-knight-of-the-seven-kingdoms-izle.html"
+            },
+            {
+                title: "Mobland",
+                desc: "Gerilim dolu bir kasaba ve suç dünyasının derinliklerine yolculuk.",
+                img: "https://gignoise.com/wp-content/uploads/2025/05/Mobland.jpg",
+                badge: "YENİ BÖLÜMLER",
+                link: "mobland-izle.html"
+            },
+            {
+                title: "IT: Welcome <br>to Derry",
+                desc: "Derry'nin karanlık geçmişi ve Pennywise'ın kökenleri gün yüzüne çıkıyor.",
+                img: "https://www.hdfilmizle.life/v/502747/poster/watch-lg/it-welcome-to-derry.webp",
+                badge: "KORKU SEVERLER İÇİN",
+                link: "derry-izle.html"
             }
         ];
 
         let currentHero = 0;
         function updateHero() {
-            const data = heroData[currentHero];
             const bg = document.getElementById('heroBg');
-            const title = document.getElementById('heroTitleDisplay');
-            const desc = document.getElementById('heroDesc');
-            const badge = document.getElementById('heroBadge');
-            const link = document.getElementById('heroLink');
+            const info = document.getElementById('heroInfo');
+            const data = heroData[currentHero];
 
-            bg.style.backgroundImage = `linear-gradient(to right, var(--bg) 20%, transparent 70%), linear-gradient(to top, var(--bg) 10%, transparent 40%), url('${data.img}')`;
-            title.innerHTML = data.title;
-            desc.innerText = data.desc;
-            badge.innerHTML = `<i data-lucide="zap" size="12" fill="currentColor"></i> ${data.badge}`;
-            link.href = data.link;
-            
-            lucide.createIcons();
+            // Önce görünmez yap (Smooth geçişin sırrı)
+            info.classList.add('fade-out');
+            bg.style.opacity = '0';
+
+            setTimeout(() => {
+                // Verileri değiştir
+                bg.style.backgroundImage = `linear-gradient(to right, var(--bg) 20%, transparent 70%), linear-gradient(to top, var(--bg) 10%, transparent 40%), url('${data.img}')`;
+                document.getElementById('heroTitleDisplay').innerHTML = data.title;
+                document.getElementById('heroDesc').innerText = data.desc;
+                document.getElementById('heroBadge').innerHTML = `<i data-lucide="zap" size="12" fill="currentColor"></i> ${data.badge}`;
+                document.getElementById('heroLink').href = data.link;
+
+                // Tekrar görünür yap
+                bg.style.opacity = '1';
+                info.classList.remove('fade-out');
+                lucide.createIcons();
+            }, 800);
+
             currentHero = (currentHero + 1) % heroData.length;
         }
 
