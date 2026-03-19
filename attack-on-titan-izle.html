@@ -24,7 +24,6 @@
             display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
 
-        /* Oynatıcı Alanı */
         .player-section {
             width: 100%; max-width: 1100px; margin-top: 80px; padding: 0 20px;
         }
@@ -33,7 +32,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5); background: #000;
         }
 
-        /* Bölüm Listesi Alanı */
         .playlist-section {
             width: 100%; max-width: 1100px; margin: 40px 0; padding: 0 20px;
         }
@@ -57,7 +55,6 @@
         .ep-num { font-weight: 800; font-size: 0.8rem; color: var(--accent); }
         .ep-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Video.js Özelleştirme */
         .video-js { width: 100%; }
         .vjs-big-play-button { background-color: var(--accent) !important; border: none !important; border-radius: 50% !important; }
         
@@ -76,7 +73,6 @@
         <div class="player-wrapper">
             <video id="main-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto" crossorigin="anonymous">
                 <source id="video-source" src="" type="application/x-mpegURL">
-                <track id="sub-source" kind="subtitles" src="" srclang="tr" label="Türkçe" default>
             </video>
         </div>
         
@@ -88,31 +84,153 @@
 
     <div class="playlist-section">
         <div class="season-title"><i data-lucide="layers"></i> 1. Sezon</div>
-        <div class="episodes-grid" id="epList">
-            </div>
+        <div class="episodes-grid" id="epList"></div>
     </div>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script>
         lucide.createIcons();
 
-        // BÖLÜM VERİLERİ - Buraya yeni bölümler ekleyebilirsin
+        // ALTYAZI METNİ (Gömülü)
+        const altyaziMetni = `WEBVTT
+
+00:00.560 --> 00:06.310
+<b></b>
+
+00:25.520 --> 00:29.680
+<b>O gün insanoğlu hatırlamıştı...</b>
+
+00:35.180 --> 00:38.260
+<b>...devlerin boyunduruğu altında
+duydukları korku ve...</b>
+
+00:40.610 --> 00:45.580
+<b>...kafesteki kuşlar gibi yaşamanın
+verdiği aşağılanmayı.</b>
+
+01:03.850 --> 01:05.880
+<b>Herkes çatışmaya hazır olsun!</b>
+
+01:06.170 --> 01:07.810
+<b>Bir tane hedef var!</b>
+
+01:07.810 --> 01:12.080
+<b>Hedefi imha edip burayı surların dışındaki
+insanlığın ilk üssü yapacağız.</b>
+
+01:13.200 --> 01:14.380
+<b>Hedef yaklaşıyor!</b>
+
+01:19.690 --> 01:21.720
+<b>Beşe ayrılın ve talimlerinizi hatırlayın!</b>
+
+01:22.670 --> 01:24.770
+<b>Biz hedefin dikkatini dağıtacağız!</b>
+
+01:24.960 --> 01:27.800
+<b>Tüm taarruz timleri,
+yukarı çıkmaya hazırlanın!</b>
+
+01:49.370 --> 01:51.670
+<b>Biz yanlardan etrafını kuşatacağız!</b>
+
+01:57.140 --> 02:01.010
+<b>İnsanoğlunun kuvvetinin tadına bak bakalım!</b>
+
+02:18.260 --> 02:23.460
+<b>Fumareta Hana no Namae mo Shirazuni</b>
+
+02:18.260 --> 02:23.460
+Hiç kimse üstüne basılmış çiçeklerin ismini hatırlamaz
+
+02:23.400 --> 02:28.800
+<b>Chiriochita Tori wa Kaze wo Machiwabiru</b>
+
+02:23.400 --> 02:28.800
+Düşen kuşlar tekrar denemeden önce bir sonraki rüzgarı beklerler
+
+02:28.700 --> 02:34.080
+<b>Inotta Tokoro de Nani mo Kawaranai</b>
+
+02:28.700 --> 02:34.080
+Dualar bizi kurtarmaz
+
+02:34.000 --> 02:39.560
+<b>Ima wo Kaeruno wa Tatakau Kakugo da</b>
+
+02:34.000 --> 02:39.560
+Bu dünyayı yalnızca savaşma arzusu değiştirebilir
+
+02:39.260 --> 02:41.840
+<b>Chikara de Fumikoe Te</b>
+
+02:39.260 --> 02:41.840
+Sana gülen domuzları görmezden gelip...
+
+02:41.560 --> 02:44.640
+<b>Susumu Ishi wo Warau Butayo</b>
+
+02:41.560 --> 02:44.640
+...ilerlemek için irade gücünü kullan
+
+02:44.440 --> 02:47.360
+<b>Kachiku no Annei Kyoi no Han'ei</b>
+
+02:44.440 --> 02:47.360
+Artık barış sarhoşu hayvanlar gibi yaşamak yok
+
+02:47.100 --> 02:50.080
+<b>Shiseru Garou no Jiyuu wo</b>
+
+02:47.100 --> 02:50.080
+Bizler özgür aç kurtlarız!
+
+02:49.920 --> 02:55.480
+<b>Torawareta Kutsujoku wa Hangeki no Kobushi da</b>
+
+02:49.920 --> 02:55.480
+Esaretin aşağılanması intikamın çağrısı olacak
+
+02:55.200 --> 03:00.700
+<b>Choueki no Sono Karada Emono wo Houmurieyo</b>
+
+02:55.200 --> 03:00.700
+Esir düşüp düşmemek fark etmez, avını öldüreceksin!
+
+03:00.600 --> 03:06.140
+<b>Hotobashiru Shoudou ni Sono Mi wo Yakinagara</b>
+
+03:00.600 --> 03:06.140
+İçine dolup taşan bu arzunun bedenini kavurduğu gibi...
+
+03:05.860 --> 03:12.760
+<b>Kasoku Te ni Hi wo Fukasu Guren no Yumiya</b>
+
+03:05.860 --> 03:12.760
+...çabucak bir yay al ve fırlat o yanan oku
+
+03:35.000 --> 03:39.990
+1. Bölüm - Shiganshina'nın Düşüşü`;
+
+        // Altyazıyı Blob objesine çeviriyoruz
+        const blob = new Blob([altyaziMetni], { type: 'text/vtt' });
+        const vttURL = URL.createObjectURL(blob);
+
         const episodes = [
             {
                 id: 1,
                 title: "2000 Yıl Sonraki Sana",
                 desc: "Shiganshina'nın Düşüşü, 1. Bölüm. İnsanlığın hatıralarındaki o karanlık gün.",
                 m3u8: "https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/master.m3u8",
-                vtt: "https://vs22.photour.org/v/Attack.On.Titan.S01E01.1080p.BluRay/subtitle-tur-1.vtt"
+                vtt: vttURL // Gömülü altyazıyı kullanıyoruz
             },
             {
                 id: 2,
                 title: "O Gün",
                 desc: "Shiganshina'nın Düşüşü, 2. Bölüm. Kaçış ve hayatta kalma mücadelesi başlar.",
                 m3u8: "BURAYA_2_BOLUM_M3U8_GELECEK",
-                vtt: "BURAYA_2_BOLUM_VTT_GELECEK"
+                vtt: "" 
             }
-            // Yeni bölümleri virgül koyarak eklemeye devam et...
         ];
 
         const player = videojs('main-player');
@@ -121,27 +239,25 @@
         function loadEpisode(index) {
             const ep = episodes[index];
             
-            // UI Güncelle
             document.getElementById('current-title').innerText = `Bölüm ${ep.id}: ${ep.title}`;
             document.getElementById('current-desc').innerText = ep.desc;
             
-            // Video ve Altyazı Güncelle
             player.src({ type: 'application/x-mpegURL', src: ep.m3u8 });
             
-            // Mevcut altyazıları temizle ve yenisini ekle
             const oldTracks = player.remoteTextTracks();
             let i = oldTracks.length;
             while (i--) { player.removeRemoteTextTrack(oldTracks[i]); }
             
-            player.addRemoteTextTrack({
-                kind: 'subtitles',
-                src: ep.vtt,
-                srclang: 'tr',
-                label: 'Türkçe',
-                default: true
-            }, false);
+            if(ep.vtt) {
+                player.addRemoteTextTrack({
+                    kind: 'subtitles',
+                    src: ep.vtt,
+                    srclang: 'tr',
+                    label: 'Türkçe',
+                    default: true
+                }, false);
+            }
 
-            // Aktif kartı işaretle
             document.querySelectorAll('.ep-card').forEach((card, i) => {
                 card.classList.toggle('active', i === index);
             });
@@ -149,7 +265,6 @@
             player.play();
         }
 
-        // Bölüm Listesini Oluştur
         episodes.forEach((ep, index) => {
             const card = document.createElement('div');
             card.className = `ep-card ${index === 0 ? 'active' : ''}`;
@@ -161,7 +276,6 @@
             epListContainer.appendChild(card);
         });
 
-        // İlk bölümü yükle
         loadEpisode(0);
     </script>
 </body>
