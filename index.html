@@ -83,9 +83,9 @@
         .row-section { margin-bottom: 60px; padding-left: 5%; }
         .row-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
 
-        .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; }
+        .slider { display: flex; gap: 20px; overflow-x: auto; padding: 10px 0; padding-right: 5%; scroll-behavior: smooth; }
         
-        /* DÜZELTİLMİŞ KART VE RESİM TASARIMI */
+        /* KART TASARIMI */
         .card {
             min-width: 220px; 
             max-width: 220px; 
@@ -98,20 +98,22 @@
         
         .card img { 
             width: 100%; 
-            aspect-ratio: 2/3; /* Tüm afişleri aynı boyuta sabitler */
-            object-fit: cover;   /* Resimlerin bozulmasını engeller */
+            aspect-ratio: 2/3; 
+            object-fit: cover; 
             display: block;
         }
         
         .card-overlay {
             position: absolute; inset: 0; padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 60%);
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 5%, transparent 50%);
             display: flex; flex-direction: column; justify-content: flex-end;
-            opacity: 0; transition: 0.3s;
+            opacity: 0.8; transition: 0.3s;
         }
-        .card:hover .card-overlay { opacity: 1; }
-        .card-title { font-weight: 800; font-size: 1rem; }
-        .card-meta { font-size: 0.75rem; color: var(--accent); margin-top: 4px; }
+        .card:hover .card-overlay { opacity: 1; background: linear-gradient(to top, rgba(var(--accent-rgb), 0.4) 0%, rgba(0,0,0,0.9) 100%); }
+        
+        .card-title { font-weight: 800; font-size: 1rem; transform: translateY(0); transition: 0.3s; }
+        .card-meta { font-size: 0.75rem; color: var(--text-dim); margin-top: 4px; transition: 0.3s; }
+        .card:hover .card-meta { color: white; }
 
         .imdb-tag { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.8); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; border: 1px solid var(--border); z-index: 5; }
 
@@ -128,16 +130,16 @@
     <nav id="navbar">
         <a href="index.html" class="logo">FATBOK<span>FLIX</span></a>
         <ul class="nav-items">
-            <li onclick="filterCategory('all')" class="active">Ana Sayfa</li>
-            <li onclick="filterCategory('dizi')">Diziler</li>
-            <li onclick="filterCategory('film')">Filmler</li>
+            <li onclick="setActiveNav(this); filterCategory('all')" class="active">Ana Sayfa</li>
+            <li onclick="setActiveNav(this); filterCategory('dizi')">Diziler</li>
+            <li onclick="setActiveNav(this); filterCategory('film')">Filmler</li>
         </ul>
         <div class="search-wrapper">
             <i data-lucide="search" class="search-icon" size="16"></i>
             <input type="text" id="searchInput" placeholder="Yapım ara..." onkeyup="filterMovies()">
         </div>
         <div style="display: flex; align-items: center; gap: 20px;">
-            <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(45deg, var(--accent), #ff8c00); display: grid; place-items:center; font-weight:800; cursor:pointer;">Ö</div>
+            <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(45deg, var(--accent), #ff8c00); display: grid; place-items:center; font-weight:800; cursor:pointer; color: white;">F</div>
         </div>
     </nav>
 
@@ -217,6 +219,11 @@
             if (window.scrollY > 50) nav.classList.add('scrolled');
             else nav.classList.remove('scrolled');
         };
+
+        function setActiveNav(el) {
+            document.querySelectorAll('.nav-items li').forEach(li => li.classList.remove('active'));
+            el.classList.add('active');
+        }
 
         function filterMovies() {
             let input = document.getElementById('searchInput').value.toLowerCase();
