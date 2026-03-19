@@ -6,16 +6,20 @@
     <title>FATBOKFLIX | Dexter: Resurrection (2025) Full HD İzle</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
     <style>
         :root {
             --bg: #030303; --surface: #0a0a0a; --accent: #ec5d00;
             --text-primary: #ffffff; --text-secondary: #71717a;
             --border: rgba(255, 255, 255, 0.05);
+            --plyr-color-main: #ec5d00; /* Player rengi */
         }
 
+        /* Tasarımı bozmamak için scrollbar ayarları */
         * { margin: 0; padding: 0; box-sizing: border-box; scrollbar-width: thin; scrollbar-color: var(--accent) #1a1a1a; }
         body { background-color: var(--bg); color: var(--text-primary); font-family: 'Plus Jakarta Sans', sans-serif; }
 
@@ -31,7 +35,10 @@
 
         .player-card { background: #000; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 30px 70px rgba(0,0,0,0.6); }
         .video-container { width: 100%; aspect-ratio: 16/9; position: relative; }
-        video { width: 100%; height: 100%; outline: none; }
+        
+        /* Plyr İnce Ayarlar */
+        .plyr--full-ui input[type=range] { color: var(--accent); }
+        .plyr__control--overlaid { background: rgba(236, 93, 0, 0.8); }
 
         .playlist-card { background: var(--surface); border-radius: 20px; padding: 25px; border: 1px solid var(--border); height: fit-content; }
         .playlist-header { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
@@ -67,7 +74,7 @@
         <div class="main-content">
             <div class="player-card">
                 <div class="video-container">
-                    <video id="hlsPlayer" controls poster="https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg"></video>
+                    <video id="hlsPlayer" playsinline controls crossorigin poster="https://m.media-amazon.com/images/S/pv-target-images/afb4b9194aa7798391f04a071a3c1bc0404882a9dd708504fe2999b3450dcf63.jpg"></video>
                 </div>
             </div>
             <div class="meta-info">
@@ -87,44 +94,36 @@
                     <div class="ep-title"><span class="ep-num">BÖLÜM 1</span><span class="ep-name">Prömiyer</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs17.photostack.net/v/Dexter.Resurrection.S01E02.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 2</span><span class="ep-name">Karanlık Yolcu</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs16.gamephotos.pro/v/Dexter.Resurrection.S01E03.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 3</span><span class="ep-name">Analiz</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs18.photour.org/v/Dexter.Resurrection.S01E04.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 4</span><span class="ep-name">Yeni Kurallar</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs11.photomag.biz/v/Dexter.Resurrection.S01E05.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 5</span><span class="ep-name">Yüzleşme</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs9.photoflax.org/v/Dexter.Resurrection.S01E06.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 6</span><span class="ep-name">Kopuş</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs15.photofunia.pro/v/Dexter.Resurrection.S01E07.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 7</span><span class="ep-name">Sonun Başlangıcı</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs17.photofunia.pro/v/Dexter.Resurrection.S01E08.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
                     <div class="ep-title"><span class="ep-num">BÖLÜM 8</span><span class="ep-name">Kritik Hata</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
-
                 <button class="ep-item" onclick="loadVideo('https://vs18.photomag.biz/v/Dexter.Resurrection.S01E09.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', this)">
-                    <div class="ep-title"><span class="ep-num">BÖLÜM 9</span><span class="ep-name">Sezon Finali Yakın</span></div>
+                    <div class="ep-title"><span class="ep-num">BÖLÜM 9</span><span class="ep-name">Sezon Finali</span></div>
                     <i data-lucide="play-circle" size="20"></i>
                 </button>
             </div>
@@ -134,27 +133,32 @@
     <script>
         lucide.createIcons();
         const video = document.getElementById('hlsPlayer');
+        
+        // Plyr Kurulumu
+        const player = new Plyr(video, {
+            controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
+            speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] }
+        });
 
         function loadVideo(url, element) {
-            // Aktif bölümü vurgula
             if(element) {
                 document.querySelectorAll('.ep-item').forEach(item => item.classList.remove('active'));
                 element.classList.add('active');
             }
 
-            // HLS Video Yükle
             if (Hls.isSupported()) {
+                if (window.hls) { window.hls.destroy(); }
                 const hls = new Hls();
                 hls.loadSource(url);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+                window.hls = hls;
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = url;
                 video.play();
             }
         }
         
-        // İlk açılışta 1. bölümü yükle
         loadVideo('https://vs14.photoflax.org/v/Dexter.Resurrection.S01E01.WEB-DL.1080p.DUAL.H.264-HDM/master.m3u8', document.querySelector('.ep-item'));
     </script>
 </body>
